@@ -39,7 +39,7 @@
         --paper: #f7fbf7;
         --line: rgba(47, 125, 91, 0.16);
         --ease: cubic-bezier(0.22, 1, 0.36, 1);
-        --shell: 76rem;
+        --shell: 82rem;
       }
 
       * {
@@ -503,10 +503,10 @@
         .hero {
           min-height: 0;
           display: grid;
-          grid-template-columns: minmax(20rem, 0.92fr) minmax(26rem, 1.18fr);
+          grid-template-columns: minmax(20rem, 0.86fr) minmax(28rem, 1.22fr);
           align-items: center;
           align-content: initial;
-          gap: 3.75rem 4.25rem;
+          gap: 2.75rem 2.85rem;
           margin: 2.1rem 0 0;
           padding: 0.35rem 0 0;
           overflow: visible;
@@ -533,7 +533,7 @@
         .hero-art {
           position: relative;
           inset: auto;
-          height: min(38.5rem, 68vh);
+          height: min(40rem, 72vh);
           border-radius: 2rem;
           overflow: hidden;
           box-shadow:
@@ -581,7 +581,21 @@
         }
 
         .paths-intro {
-          max-width: 36rem;
+          display: flex;
+          align-items: end;
+          justify-content: space-between;
+          gap: 2.5rem;
+          max-width: none;
+        }
+
+        .paths-intro h2 {
+          margin: 0;
+          flex: 0 1 22rem;
+        }
+
+        .paths-intro p {
+          max-width: 28rem;
+          text-align: right;
         }
 
         .path-list {
@@ -721,7 +735,7 @@
 
         <div class="hero-art" aria-hidden="true">
           <span class="art-chip">Milano · 45.46°N</span>
-          <svg viewBox="0 0 900 720" preserveAspectRatio="xMidYMid slice">
+          <svg viewBox="0 0 900 720" preserveAspectRatio="xMidYMax slice">
             <defs>
               <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="0%" stop-color="#8fbdd0" />
