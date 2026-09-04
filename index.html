@@ -30,12 +30,78 @@
         padding: 1rem 1.15rem;
         margin: 1rem 0;
       }
+      .video-wrap {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        background: #1a1f16;
+        border-radius: 8px;
+        overflow: hidden;
+      }
+      .video-wrap iframe,
+      .video-wrap img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        border: 0;
+        object-fit: cover;
+      }
+      .video-poster {
+        position: absolute;
+        inset: 0;
+        display: block;
+        padding: 0;
+        border: 0;
+        background: #1a1f16;
+        cursor: pointer;
+      }
+      .video-poster .play {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 4.25rem;
+        height: 3rem;
+        border-radius: 0.75rem;
+        background: #f00;
+        color: #fff;
+        font: 700 0.95rem/3rem Georgia, serif;
+        text-align: center;
+      }
     </style>
   </head>
   <body>
     <main>
       <h1>Kohnavard</h1>
       <p>Legal pages for the Kohnavard app.</p>
+      <div class="card">
+        <p><strong>Viamici, coming soon...</strong></p>
+        <div class="video-wrap" id="video">
+          <button type="button" class="video-poster" id="play-video" aria-label="Play Viamici, coming soon...">
+            <img src="./assets/viamici-poster.jpg" alt="Viamici, coming soon..." />
+            <span class="play" aria-hidden="true">▶</span>
+          </button>
+        </div>
+        <p><a href="https://www.youtube.com/watch?v=24m0hyvjBJs" target="_blank" rel="noopener noreferrer">Watch on YouTube</a></p>
+      </div>
+      <script>
+        (function () {
+          var wrap = document.getElementById("video");
+          var play = document.getElementById("play-video");
+          if (!wrap || !play) return;
+          play.addEventListener("click", function () {
+            var frame = document.createElement("iframe");
+            frame.src =
+              "https://www.youtube.com/embed/24m0hyvjBJs?autoplay=1&rel=0";
+            frame.title = "Viamici, coming soon...";
+            frame.allow =
+              "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+            frame.allowFullscreen = true;
+            wrap.replaceChildren(frame);
+          });
+        })();
+      </script>
       <div class="card">
         <p><a href="./privacy.html">Privacy Policy</a></p>
         <p><a href="./account-deletion.html">Delete your account</a></p>
