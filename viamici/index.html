@@ -15,29 +15,31 @@
     />
     <meta property="og:url" content="https://viamici.com/" />
     <meta property="og:image" content="https://viamici.com/og-default.png" />
-    <meta name="theme-color" content="#06110d" />
+    <meta name="theme-color" content="#F6E8D0" />
     <link rel="icon" href="./favicon.png" />
     <link rel="apple-touch-icon" href="./apple-touch.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Syne:wght@600;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Sora:wght@300;400;500;600&display=swap"
       rel="stylesheet"
     />
     <style>
       :root {
-        --void: #06110d;
-        --moss: #0b1d16;
-        --glow: #7dffb3;
-        --glow-dim: rgba(125, 255, 179, 0.16);
-        --amber: #ffc857;
-        --ice: #8fe7ff;
-        --fog: #c5d4cc;
-        --mute: #8aa094;
-        --line: rgba(125, 255, 179, 0.16);
-        --glass: rgba(8, 22, 17, 0.62);
-        --ease: cubic-bezier(0.16, 1, 0.3, 1);
-        --shell: 78rem;
+        --lake: #1b4f72;
+        --lake-deep: #123a54;
+        --forest: #2f7d5b;
+        --forest-soft: #5fa88a;
+        --leaf: #8fbf7a;
+        --meadow: #f3eee4;
+        --sky: #4a8ba8;
+        --honey: #d0892a;
+        --ink: #1c241c;
+        --muted: #5d6758;
+        --paper: #fff8ee;
+        --line: rgba(47, 125, 91, 0.16);
+        --ease: cubic-bezier(0.22, 1, 0.36, 1);
+        --shell: 82rem;
       }
 
       * {
@@ -50,11 +52,11 @@
 
       body {
         margin: 0;
-        color: var(--fog);
-        font-family: Outfit, system-ui, sans-serif;
+        color: var(--ink);
+        font-family: Sora, system-ui, sans-serif;
         font-weight: 400;
         line-height: 1.55;
-        background: var(--void);
+        background: var(--meadow);
         overflow-x: hidden;
       }
 
@@ -62,52 +64,34 @@
         color: inherit;
       }
 
-      .sky {
+      .bg {
         position: fixed;
         inset: 0;
         z-index: 0;
         pointer-events: none;
         background:
-          radial-gradient(42rem 28rem at 12% -8%, rgba(125, 255, 179, 0.14), transparent 58%),
-          radial-gradient(36rem 24rem at 92% 8%, rgba(143, 231, 255, 0.1), transparent 52%),
-          radial-gradient(48rem 30rem at 70% 110%, rgba(255, 200, 87, 0.08), transparent 55%),
-          linear-gradient(180deg, #081610 0%, #06110d 46%, #040a08 100%);
+          radial-gradient(42rem 28rem at 80% -6%, rgba(255, 186, 92, 0.42), transparent 58%),
+          radial-gradient(36rem 22rem at 12% 0%, rgba(255, 220, 170, 0.4), transparent 52%),
+          radial-gradient(48rem 26rem at 50% 100%, rgba(47, 125, 91, 0.14), transparent 55%),
+          linear-gradient(180deg, #ffe7c4 0%, #f7efe2 28%, #eef3e8 62%, #e4eee4 100%);
       }
 
-      .grid {
+      .grain {
         position: fixed;
         inset: 0;
         z-index: 1;
         pointer-events: none;
         opacity: 0.22;
-        background-image:
-          linear-gradient(rgba(125, 255, 179, 0.08) 1px, transparent 1px),
-          linear-gradient(90deg, rgba(125, 255, 179, 0.08) 1px, transparent 1px);
-        background-size: 72px 72px;
-        mask-image: radial-gradient(circle at 50% 20%, #000 20%, transparent 78%);
-      }
-
-      .topo {
-        position: fixed;
-        inset: auto 0 -12vh;
-        height: 48vh;
-        z-index: 1;
-        pointer-events: none;
-        opacity: 0.35;
-      }
-
-      .topo svg {
-        width: 100%;
-        height: 100%;
-        display: block;
+        mix-blend-mode: multiply;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
       }
 
       .wrap {
         position: relative;
         z-index: 2;
-        width: min(var(--shell), calc(100% - 1.6rem));
+        width: min(var(--shell), calc(100% - 2.5rem));
         margin: 0 auto;
-        padding: 1.1rem 0 4.5rem;
+        padding: 1.25rem 0 4.5rem;
       }
 
       header {
@@ -115,131 +99,117 @@
         align-items: center;
         justify-content: space-between;
         gap: 1rem;
-        padding: 0.55rem 0.7rem;
-        border: 1px solid var(--line);
-        border-radius: 999px;
-        background: rgba(6, 17, 13, 0.55);
-        backdrop-filter: blur(16px);
       }
 
       .brand {
         display: inline-flex;
         align-items: center;
-        gap: 0.65rem;
+        gap: 0.7rem;
         text-decoration: none;
       }
 
       .mark {
-        width: 2.2rem;
-        height: 2.2rem;
-        border-radius: 0.7rem;
+        width: 2.35rem;
+        height: 2.35rem;
+        border-radius: 0.85rem;
+        background: linear-gradient(145deg, var(--lake-deep), var(--forest));
         display: grid;
         place-items: center;
-        background: linear-gradient(160deg, #12382b, #0a1f18);
-        box-shadow: 0 0 0 1px rgba(125, 255, 179, 0.22), 0 10px 24px rgba(0, 0, 0, 0.28);
+        box-shadow: 0 10px 28px rgba(47, 125, 91, 0.22);
       }
 
       .mark svg {
-        width: 1.05rem;
-        height: 1.05rem;
+        width: 1.15rem;
+        height: 1.15rem;
       }
 
       .brand-name {
-        font-family: Syne, sans-serif;
-        font-weight: 700;
-        font-size: 1.12rem;
-        letter-spacing: -0.03em;
-        color: #f3fff8;
+        font-family: Fraunces, Georgia, serif;
+        font-weight: 600;
+        font-size: 1.35rem;
+        letter-spacing: -0.02em;
+        color: var(--lake-deep);
       }
 
       .lang {
         display: inline-flex;
-        padding: 0.16rem;
+        padding: 0.2rem;
         border-radius: 999px;
-        background: rgba(255, 255, 255, 0.04);
-        border: 1px solid rgba(255, 255, 255, 0.06);
+        background: rgba(255, 255, 255, 0.62);
+        border: 1px solid var(--line);
+        backdrop-filter: blur(10px);
       }
 
       .lang button {
         appearance: none;
         border: 0;
         background: transparent;
-        color: var(--mute);
-        font: 600 0.74rem/1 Outfit, sans-serif;
-        letter-spacing: 0.08em;
-        padding: 0.5rem 0.78rem;
+        color: var(--muted);
+        font: 500 0.78rem/1 Sora, sans-serif;
+        letter-spacing: 0.04em;
+        padding: 0.55rem 0.85rem;
         border-radius: 999px;
         cursor: pointer;
+        transition: background 0.25s var(--ease), color 0.25s var(--ease);
       }
 
       .lang button[aria-pressed="true"] {
-        background: var(--glow);
-        color: #06110d;
+        background: var(--forest);
+        color: #fff;
       }
 
       .hero {
-        margin-top: 2.4rem;
+        position: relative;
+        min-height: calc(100svh - 5.25rem);
         display: grid;
-        gap: 1.35rem;
+        align-content: end;
+        gap: 1.2rem;
+        margin: 1rem -1.25rem 0;
+        padding: 3.25rem 1.25rem 2.4rem;
+        overflow: hidden;
+      }
+
+      .hero-copy {
+        position: relative;
+        z-index: 2;
+        max-width: 34rem;
       }
 
       .eyebrow {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.55rem;
-        margin: 0;
-        padding: 0.38rem 0.75rem 0.38rem 0.5rem;
-        width: fit-content;
-        border-radius: 999px;
-        border: 1px solid rgba(255, 200, 87, 0.28);
-        background: rgba(255, 200, 87, 0.08);
-        color: var(--amber);
-        font-size: 0.72rem;
-        font-weight: 600;
-        letter-spacing: 0.16em;
+        margin: 0 0 0.85rem;
+        font-size: 0.74rem;
+        font-weight: 500;
+        letter-spacing: 0.14em;
         text-transform: uppercase;
-      }
-
-      .eyebrow::before {
-        content: "";
-        width: 0.48rem;
-        height: 0.48rem;
-        border-radius: 50%;
-        background: var(--amber);
-        box-shadow: 0 0 0 0 rgba(255, 200, 87, 0.7);
-        animation: pulse 1.8s var(--ease) infinite;
+        color: var(--honey);
       }
 
       h1.brand-hero {
-        margin: 0;
-        font-family: Syne, sans-serif;
-        font-weight: 800;
-        font-size: clamp(4.2rem, 18vw, 9.4rem);
-        line-height: 0.82;
-        letter-spacing: -0.07em;
-        color: #f6fff9;
-        background: linear-gradient(180deg, #ffffff 10%, #c8ffe0 48%, #7dffb3 100%);
-        -webkit-background-clip: text;
-        background-clip: text;
-        color: transparent;
+        margin: 0 0 0.85rem;
+        font-family: Fraunces, Georgia, serif;
+        font-weight: 700;
+        font-size: clamp(3.1rem, 12vw, 4.4rem);
+        line-height: 0.94;
+        letter-spacing: -0.045em;
+        color: var(--lake-deep);
       }
 
       .slogan {
-        margin: 0;
+        margin: 0 0 0.8rem;
+        font-family: Fraunces, Georgia, serif;
+        font-weight: 500;
+        font-size: clamp(1.28rem, 4.4vw, 1.7rem);
+        line-height: 1.28;
+        letter-spacing: -0.02em;
+        color: var(--ink);
         max-width: 16ch;
-        font-family: Syne, sans-serif;
-        font-weight: 700;
-        font-size: clamp(1.45rem, 4.6vw, 2.35rem);
-        line-height: 1.12;
-        letter-spacing: -0.04em;
-        color: #edf8f1;
       }
 
       .lede {
         margin: 0;
-        max-width: 42ch;
-        color: var(--mute);
-        font-size: 1.05rem;
+        color: var(--muted);
+        font-size: 1.02rem;
+        max-width: 38ch;
         font-weight: 300;
       }
 
@@ -247,112 +217,142 @@
         display: flex;
         flex-wrap: wrap;
         gap: 0.7rem;
-        margin-top: 0.35rem;
+        margin-top: 1.15rem;
       }
 
       .cta {
         display: inline-flex;
         align-items: center;
-        gap: 0.7rem;
-        padding: 0.85rem 1.1rem;
-        border-radius: 1.15rem;
+        gap: 0.65rem;
+        padding: 0.82rem 1.1rem;
+        border-radius: 999px;
+        text-decoration: none;
         border: 1px solid transparent;
+        transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease);
+      }
+
+      .cta:hover {
+        transform: translateY(-2px);
       }
 
       .cta-primary {
-        background: var(--glow);
-        color: #06110d;
-        box-shadow: 0 12px 40px rgba(125, 255, 179, 0.2);
+        background: var(--forest);
+        color: #fff;
+        box-shadow: 0 14px 34px rgba(47, 125, 91, 0.28);
       }
 
       .cta-secondary {
-        color: #f3fff8;
-        background: rgba(255, 255, 255, 0.04);
-        border-color: rgba(255, 255, 255, 0.1);
+        background: rgba(255, 255, 255, 0.78);
+        border-color: var(--line);
+        color: var(--lake-deep);
       }
 
       .cta small {
         display: block;
         font-size: 0.68rem;
-        opacity: 0.7;
+        opacity: 0.78;
         font-weight: 400;
       }
 
       .cta strong {
         display: block;
-        font-size: 0.94rem;
+        font-size: 0.92rem;
         font-weight: 600;
       }
 
-      .coords {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.55rem 1rem;
-        color: var(--mute);
-        font-size: 0.74rem;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
+      .hero-art {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
       }
 
-      .coords span {
-        color: var(--ice);
+      .hero-art svg {
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
+
+      .hero-veil {
+        position: absolute;
+        inset: 0;
+        background:
+          linear-gradient(90deg, rgba(255, 244, 226, 0.92) 0%, rgba(255, 244, 226, 0.5) 36%, rgba(255, 244, 226, 0.08) 58%, transparent 74%),
+          linear-gradient(180deg, transparent 46%, rgba(255, 244, 226, 0.4) 100%);
+      }
+
+      .art-chip {
+        display: none;
+      }
+
+      .shimmer {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          110deg,
+          transparent 30%,
+          rgba(255, 255, 255, 0.18) 48%,
+          transparent 62%
+        );
+        transform: translateX(-60%);
+        animation: shimmer 8s var(--ease) infinite;
+        pointer-events: none;
+      }
+
+      .bubbles {
+        position: relative;
+        z-index: 2;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.5rem 0.62rem;
+        margin: 0.85rem 0 1.85rem;
+        min-height: 2.5rem;
+        pointer-events: none;
+      }
+
+      .bubble {
+        white-space: nowrap;
+        padding: 0.4rem 0.82rem;
+        border-radius: 999px;
+        font-size: 0.76rem;
+        font-weight: 500;
+        letter-spacing: 0.02em;
+        color: rgba(18, 58, 84, 0.52);
+        background: rgba(255, 255, 255, 0.5);
+        border: 1px solid rgba(47, 125, 91, 0.12);
+        backdrop-filter: blur(6px);
+        animation: bobSoft 5.5s ease-in-out infinite;
+        opacity: 0.78;
+      }
+
+      .bubble:nth-child(2n) {
+        animation-delay: -1.2s;
+      }
+
+      .bubble:nth-child(3n) {
+        animation-delay: -2.4s;
+        opacity: 0.58;
+      }
+
+      .bubble:nth-child(4n) {
+        animation-delay: -0.6s;
       }
 
       .film {
-        margin: 2.6rem auto 0;
-        width: min(68rem, 100%);
-      }
-
-      .film-hud {
-        display: flex;
-        justify-content: space-between;
-        gap: 1rem;
-        margin-bottom: 0.7rem;
-        color: var(--mute);
-        font-size: 0.72rem;
-        letter-spacing: 0.12em;
-        text-transform: uppercase;
-      }
-
-      .film-hud b {
-        color: var(--glow);
-        font-weight: 600;
+        width: min(56rem, 100%);
+        margin: 1.75rem auto 0;
       }
 
       .film-frame {
         position: relative;
         aspect-ratio: 16 / 9;
+        border-radius: 1.35rem;
         overflow: hidden;
-        border-radius: 1.4rem;
-        background: #020806;
+        background: #2a3a2e;
         box-shadow:
-          0 0 0 1px rgba(125, 255, 179, 0.2),
-          0 30px 80px rgba(0, 0, 0, 0.45);
-      }
-
-      .film-frame::before,
-      .film-frame::after {
-        content: "";
-        position: absolute;
-        width: 1.15rem;
-        height: 1.15rem;
-        z-index: 2;
-        pointer-events: none;
-        border: 1.6px solid var(--glow);
-      }
-
-      .film-frame::before {
-        top: 0.7rem;
-        left: 0.7rem;
-        border-right: 0;
-        border-bottom: 0;
-      }
-
-      .film-frame::after {
-        right: 0.7rem;
-        bottom: 0.7rem;
-        border-left: 0;
-        border-top: 0;
+          0 24px 60px rgba(80, 52, 18, 0.14),
+          0 0 0 1px rgba(255, 236, 204, 0.7) inset;
       }
 
       .film-frame video {
@@ -360,45 +360,31 @@
         width: 100%;
         height: 100%;
         object-fit: contain;
-        background: #020806;
-      }
-
-      .bubbles {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 0.5rem;
-        margin: 1.4rem 0 0;
-      }
-
-      .bubble {
-        padding: 0.4rem 0.8rem;
-        border-radius: 999px;
-        border: 1px solid rgba(125, 255, 179, 0.12);
-        background: rgba(125, 255, 179, 0.05);
-        color: #d7efe3;
-        font-size: 0.76rem;
-        letter-spacing: 0.04em;
+        background: #0d2433;
       }
 
       .paths {
-        margin-top: 3.2rem;
+        margin-top: 0.35rem;
         display: grid;
-        gap: 1.4rem;
+        gap: 1.35rem;
+      }
+
+      .paths-intro {
+        max-width: 32rem;
       }
 
       .paths-intro h2 {
-        margin: 0 0 0.45rem;
-        font-family: Syne, sans-serif;
-        font-size: clamp(1.8rem, 4vw, 2.7rem);
-        letter-spacing: -0.045em;
-        color: #f4fff8;
+        margin: 0 0 0.4rem;
+        font-family: Fraunces, Georgia, serif;
+        font-size: clamp(1.55rem, 3vw, 2.05rem);
+        letter-spacing: -0.03em;
+        color: var(--lake-deep);
       }
 
       .paths-intro p {
         margin: 0;
-        max-width: 36ch;
-        color: var(--mute);
+        color: var(--muted);
+        font-weight: 300;
       }
 
       .path-list {
@@ -407,39 +393,32 @@
       }
 
       .path {
-        position: relative;
-        overflow: hidden;
-        padding: 1.4rem 1.25rem 1.35rem;
-        border-radius: 1.35rem;
+        background: rgba(255, 250, 240, 0.86);
         border: 1px solid var(--line);
-        background: linear-gradient(180deg, rgba(16, 40, 31, 0.72), rgba(8, 20, 16, 0.72));
-      }
-
-      .path::after {
-        content: "";
-        position: absolute;
-        inset: auto -20% -40%;
-        height: 7rem;
-        background: radial-gradient(circle, var(--glow-dim), transparent 68%);
-        pointer-events: none;
+        border-radius: 1.35rem;
+        padding: 1.35rem 1.25rem 1.3rem;
+        backdrop-filter: blur(8px);
+        transition:
+          transform 0.35s var(--ease),
+          box-shadow 0.35s var(--ease),
+          border-color 0.35s var(--ease);
       }
 
       .path-top {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        margin-bottom: 1.1rem;
+        margin-bottom: 0.9rem;
       }
 
       .path-icon {
-        width: 2.3rem;
-        height: 2.3rem;
+        width: 2.15rem;
+        height: 2.15rem;
         border-radius: 0.75rem;
         display: grid;
         place-items: center;
-        color: var(--glow);
-        background: rgba(125, 255, 179, 0.08);
-        border: 1px solid rgba(125, 255, 179, 0.12);
+        background: rgba(47, 125, 91, 0.1);
+        color: var(--forest);
       }
 
       .path-icon svg {
@@ -448,70 +427,78 @@
       }
 
       .path-index {
-        font-family: Syne, sans-serif;
-        font-size: 0.95rem;
-        letter-spacing: 0.08em;
-        color: var(--ice);
+        font-family: Fraunces, Georgia, serif;
+        font-size: 0.92rem;
+        color: var(--forest);
       }
 
       .path h3 {
         margin: 0 0 0.5rem;
-        font-family: Syne, sans-serif;
-        font-size: 1.28rem;
-        letter-spacing: -0.03em;
-        color: #f3fff8;
+        font-family: Fraunces, Georgia, serif;
+        font-size: 1.22rem;
+        letter-spacing: -0.02em;
+        color: var(--lake-deep);
       }
 
       .path p {
         margin: 0;
-        color: var(--mute);
-        font-size: 0.96rem;
+        color: var(--muted);
+        font-size: 0.94rem;
         font-weight: 300;
       }
 
       .contact {
-        margin-top: 2.8rem;
-        padding: 1.5rem 1.3rem;
+        margin-top: 2.75rem;
+        padding: 1.7rem 1.4rem;
         border-radius: 1.5rem;
+        background: linear-gradient(145deg, rgba(27, 79, 114, 0.96), rgba(47, 125, 91, 0.92));
+        color: #edf6f0;
         display: grid;
         gap: 0.85rem;
-        border: 1px solid rgba(143, 231, 255, 0.16);
-        background:
-          linear-gradient(135deg, rgba(20, 48, 42, 0.9), rgba(8, 22, 28, 0.92));
       }
 
       .contact h2 {
         margin: 0;
-        font-family: Syne, sans-serif;
-        font-size: 1.55rem;
-        color: #f4fff8;
+        font-family: Fraunces, Georgia, serif;
+        font-size: 1.5rem;
+        letter-spacing: -0.02em;
       }
 
       .contact .place {
-        margin: 0.25rem 0 0;
-        color: var(--mute);
+        margin: 0.2rem 0 0;
+        color: rgba(237, 246, 240, 0.74);
+        font-weight: 300;
       }
 
       .contact a {
-        color: var(--amber);
+        color: #f0d7a0;
         text-decoration: none;
         font-size: 1.08rem;
-        font-weight: 600;
+        font-weight: 500;
         justify-self: start;
       }
 
+      .contact a:hover {
+        text-decoration: underline;
+      }
+
       footer {
-        margin-top: 1.6rem;
-        color: #6d8478;
-        font-size: 0.8rem;
+        margin-top: 1.75rem;
+        color: var(--muted);
+        font-size: 0.82rem;
+        font-weight: 300;
       }
 
       .visually-hidden {
         position: absolute;
         width: 1px;
         height: 1px;
+        padding: 0;
+        margin: -1px;
         overflow: hidden;
         clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
       }
 
       [data-i18n] {
@@ -522,58 +509,141 @@
         opacity: 0.35;
       }
 
-      @keyframes pulse {
-        0% {
-          box-shadow: 0 0 0 0 rgba(255, 200, 87, 0.55);
+      @keyframes shimmer {
+        0%,
+        18% {
+          transform: translateX(-70%);
         }
+        55%,
         100% {
-          box-shadow: 0 0 0 0.7rem rgba(255, 200, 87, 0);
+          transform: translateX(120%);
+        }
+      }
+
+      @keyframes bobSoft {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-5px);
         }
       }
 
       @media (min-width: 960px) {
         .wrap {
-          width: min(var(--shell), calc(100% - 4rem));
-          padding: 1.3rem 0 5.5rem;
+          width: min(var(--shell), calc(100% - 4.5rem));
+          padding: 1.6rem 0 5.5rem;
         }
 
         .hero {
-          margin-top: 3.4rem;
-          grid-template-columns: 1.1fr 0.9fr;
-          align-items: end;
-          gap: 3rem;
+          min-height: 0;
+          display: grid;
+          grid-template-columns: minmax(20rem, 0.86fr) minmax(28rem, 1.22fr);
+          align-items: center;
+          align-content: initial;
+          gap: 2.75rem 2.85rem;
+          margin: 2.1rem 0 0;
+          padding: 0.35rem 0 0;
+          overflow: visible;
+        }
+
+        .hero-copy {
+          max-width: 36rem;
         }
 
         h1.brand-hero {
-          grid-column: 1 / -1;
+          font-size: clamp(3.4rem, 4.6vw, 4.55rem);
         }
 
         .slogan {
-          max-width: 13ch;
+          font-size: clamp(1.45rem, 1.7vw, 1.75rem);
+          max-width: 15ch;
+        }
+
+        .lede {
+          font-size: 1.05rem;
+          max-width: 34ch;
+        }
+
+        .hero-art {
+          position: relative;
+          inset: auto;
+          height: min(40rem, 72vh);
+          border-radius: 2rem;
+          overflow: hidden;
+          box-shadow:
+            0 28px 70px rgba(18, 58, 84, 0.16),
+            0 0 0 1px rgba(255, 255, 255, 0.35) inset;
+        }
+
+        .hero-veil {
+          display: none;
+        }
+
+        .art-chip {
+          display: inline-flex;
+          position: absolute;
+          top: 1.15rem;
+          left: 1.15rem;
+          z-index: 2;
+          padding: 0.42rem 0.75rem;
+          border-radius: 999px;
+          font-size: 0.72rem;
+          font-weight: 500;
+          letter-spacing: 0.04em;
+          color: var(--lake-deep);
+          background: rgba(247, 251, 247, 0.72);
+          border: 1px solid rgba(255, 255, 255, 0.55);
+          backdrop-filter: blur(10px);
         }
 
         .film {
-          margin-top: 3.4rem;
+          width: min(64rem, 100%);
+          margin: 2.75rem auto 0.35rem;
         }
 
         .film-frame {
-          border-radius: 1.7rem;
+          border-radius: 1.6rem;
+          box-shadow:
+            0 28px 70px rgba(92, 58, 18, 0.14),
+            0 0 0 1px rgba(255, 236, 204, 0.75) inset;
+        }
+
+        .bubbles {
+          justify-content: flex-start;
+          max-width: 38rem;
+          margin: 1.15rem 0 2.35rem;
         }
 
         .paths {
-          margin-top: 4rem;
+          margin-top: 0.5rem;
+          gap: 1.6rem;
         }
 
-        .paths-intro {
+        .paths-head {
           display: flex;
           align-items: end;
           justify-content: space-between;
           gap: 2rem;
         }
 
+        .paths-intro {
+          display: flex;
+          align-items: end;
+          justify-content: space-between;
+          gap: 2.5rem;
+          max-width: none;
+        }
+
+        .paths-intro h2 {
+          margin: 0;
+          flex: 0 1 22rem;
+        }
+
         .paths-intro p {
+          max-width: 28rem;
           text-align: right;
-          max-width: 30ch;
         }
 
         .path-list {
@@ -582,28 +652,50 @@
         }
 
         .path {
-          min-height: 17rem;
-          padding: 1.55rem 1.4rem;
+          padding: 1.55rem 1.4rem 1.5rem;
+          min-height: 15.5rem;
         }
 
         .path:hover {
-          transform: translateY(-6px);
-          border-color: rgba(125, 255, 179, 0.34);
-          box-shadow: 0 18px 50px rgba(0, 0, 0, 0.28);
+          transform: translateY(-5px);
+          border-color: rgba(47, 125, 91, 0.32);
+          box-shadow: 0 18px 40px rgba(18, 58, 84, 0.1);
         }
 
         .contact {
-          margin-top: 3rem;
-          padding: 1.7rem 1.8rem;
+          margin-top: 2.4rem;
+          padding: 1.85rem 2rem;
           grid-template-columns: 1fr auto;
           align-items: center;
+          gap: 1.5rem;
         }
 
         .contact a {
+          font-size: 1.28rem;
           padding: 0.85rem 1.15rem;
           border-radius: 999px;
-          border: 1px solid rgba(255, 200, 87, 0.28);
-          background: rgba(255, 200, 87, 0.08);
+          background: rgba(240, 215, 160, 0.12);
+          border: 1px solid rgba(240, 215, 160, 0.28);
+        }
+
+        .contact a:hover {
+          text-decoration: none;
+          background: rgba(240, 215, 160, 0.2);
+        }
+      }
+
+      @media (max-width: 959px) {
+        .paths-head {
+          display: grid;
+          gap: 0.2rem;
+        }
+      }
+
+      @media (max-width: 720px) {
+        .hero-veil {
+          background:
+            linear-gradient(180deg, rgba(255, 236, 204, 0.18), rgba(255, 244, 226, 0.78) 76%),
+            linear-gradient(90deg, rgba(255, 236, 204, 0.28), transparent 78%);
         }
       }
 
@@ -614,42 +706,33 @@
           animation: none !important;
           transition: none !important;
         }
+        .bubble {
+          opacity: 0.35;
+        }
       }
     </style>
   </head>
   <body>
-    <div class="sky" aria-hidden="true"></div>
-    <div class="grid" aria-hidden="true"></div>
-    <div class="topo" aria-hidden="true">
-      <svg viewBox="0 0 1440 420" preserveAspectRatio="none">
-        <path
-          d="M0 260 C180 210 320 290 520 240 C740 180 900 300 1140 230 C1280 190 1380 220 1440 200"
-          fill="none"
-          stroke="rgba(125,255,179,0.22)"
-          stroke-width="1.2"
-        />
-        <path
-          d="M0 310 C220 270 380 340 620 290 C860 236 980 350 1220 300 C1320 278 1390 300 1440 286"
-          fill="none"
-          stroke="rgba(143,231,255,0.16)"
-          stroke-width="1.2"
-        />
-        <path
-          d="M0 360 C260 330 420 390 700 340 C980 286 1100 400 1440 350"
-          fill="none"
-          stroke="rgba(255,200,87,0.12)"
-          stroke-width="1.2"
-        />
-      </svg>
-    </div>
+    <div class="bg" aria-hidden="true"></div>
+    <div class="grain" aria-hidden="true"></div>
 
     <div class="wrap">
       <header>
         <a class="brand" href="/">
           <span class="mark" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none">
-              <path d="M4 18 L12 6 L20 18" stroke="#7dffb3" stroke-width="1.7" stroke-linejoin="round" />
-              <path d="M8.4 18 L12 12.2 L15.6 18" stroke="#ffc857" stroke-width="1.5" stroke-linejoin="round" />
+              <path
+                d="M4 18 L12 6 L20 18"
+                stroke="#fff"
+                stroke-width="1.7"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M8.4 18 L12 12.2 L15.6 18"
+                stroke="#e0b35c"
+                stroke-width="1.5"
+                stroke-linejoin="round"
+              />
             </svg>
           </span>
           <span class="brand-name">Viamici</span>
@@ -661,10 +744,12 @@
       </header>
 
       <section class="hero">
-        <p class="eyebrow" data-i18n="eyebrow">Coming soon</p>
-        <h1 class="brand-hero">Viamici</h1>
-        <p class="slogan" data-i18n="slogan">Find your community and go on adventures!</p>
-        <div>
+        <div class="hero-copy">
+          <p class="eyebrow" data-i18n="eyebrow">Coming soon</p>
+          <h1 class="brand-hero">Viamici</h1>
+          <p class="slogan" data-i18n="slogan">
+            Find your community and go on adventures!
+          </p>
           <p class="lede" data-i18n="lede">
             People nearby. Open air. Real days out. Host a trek, join a group, or take an AI guided path when you want a little wonder.
           </p>
@@ -695,14 +780,109 @@
             </div>
           </div>
         </div>
-        <p class="coords">Milano · 45.46°N <span>Outdoor community</span></p>
+
+        <div class="hero-art" aria-hidden="true">
+          <span class="art-chip">Milano · 45.46°N</span>
+          <svg viewBox="0 0 900 720" preserveAspectRatio="xMidYMax slice">
+            <defs>
+              <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#ffb36a" />
+                <stop offset="18%" stop-color="#ffd39a" />
+                <stop offset="42%" stop-color="#f3d7b0" />
+                <stop offset="72%" stop-color="#d8e5c8" />
+                <stop offset="100%" stop-color="#e8f0de" />
+              </linearGradient>
+              <linearGradient id="ridgeFar" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#c9a078" />
+                <stop offset="100%" stop-color="#7d8f68" />
+              </linearGradient>
+              <linearGradient id="ridgeMid" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#6aa57a" />
+                <stop offset="100%" stop-color="#3d6f55" />
+              </linearGradient>
+              <linearGradient id="ridgeNear" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#4d86a4" />
+                <stop offset="100%" stop-color="#1b4f72" />
+              </linearGradient>
+              <linearGradient id="sunGlow" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#fff7d8" />
+                <stop offset="100%" stop-color="#ffb247" stop-opacity="0.8" />
+              </linearGradient>
+              <linearGradient id="ray" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#ffe7b0" stop-opacity="0.55" />
+                <stop offset="100%" stop-color="#ffe7b0" stop-opacity="0" />
+              </linearGradient>
+              <linearGradient id="mist" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#fff6e8" stop-opacity="0" />
+                <stop offset="50%" stop-color="#fff6e8" stop-opacity="0.35" />
+                <stop offset="100%" stop-color="#fff6e8" stop-opacity="0" />
+              </linearGradient>
+              <radialGradient id="lakeShine" cx="50%" cy="40%" r="55%">
+                <stop offset="0%" stop-color="#d7ebf3" stop-opacity="0.75" />
+                <stop offset="100%" stop-color="#9fc4d6" stop-opacity="0" />
+              </radialGradient>
+              <filter id="soft">
+                <feGaussianBlur stdDeviation="14" />
+              </filter>
+            </defs>
+            <rect width="900" height="720" fill="url(#skyGrad)" />
+            <circle cx="690" cy="168" r="210" fill="#ffc878" opacity="0.28" filter="url(#soft)" />
+            <circle cx="690" cy="168" r="78" fill="url(#sunGlow)" />
+            <circle cx="690" cy="168" r="148" fill="#ffe2a8" opacity="0.32" filter="url(#soft)" />
+            <g opacity="0.42">
+              <path d="M690 168 L520 680" stroke="url(#ray)" stroke-width="72" />
+              <path d="M690 168 L690 700" stroke="url(#ray)" stroke-width="54" />
+              <path d="M690 168 L840 660" stroke="url(#ray)" stroke-width="40" />
+              <path d="M690 168 L430 620" stroke="url(#ray)" stroke-width="28" />
+            </g>
+            <path
+              d="M0 330 C140 280 250 300 380 338 C530 384 640 278 780 318 C850 338 880 360 900 352 L900 720 L0 720 Z"
+              fill="url(#ridgeFar)"
+              opacity="0.62"
+            />
+            <path
+              d="M0 410 C160 350 280 380 430 418 C590 462 680 368 820 408 C870 426 890 448 900 438 L900 720 L0 720 Z"
+              fill="url(#ridgeMid)"
+              opacity="0.86"
+            />
+            <path
+              d="M0 500 C170 438 300 468 450 508 C620 552 710 458 840 498 C875 512 890 530 900 522 L900 720 L0 720 Z"
+              fill="url(#ridgeNear)"
+            />
+            <g fill="#123a54">
+              <path d="M628 478 L656 352 L684 478 Z" />
+              <path d="M652 486 L672 392 L694 486 Z" opacity="0.88" />
+              <path d="M688 496 L706 418 L724 496 Z" opacity="0.72" />
+              <path d="M598 490 L616 414 L634 490 Z" opacity="0.6" />
+              <path d="M744 508 L758 448 L774 508 Z" opacity="0.55" />
+            </g>
+            <ellipse cx="470" cy="612" rx="290" ry="36" fill="url(#lakeShine)" />
+            <ellipse cx="470" cy="430" rx="380" ry="46" fill="url(#mist)" />
+            <ellipse cx="280" cy="500" rx="220" ry="32" fill="url(#mist)" />
+            <path
+              d="M210 590 C310 548 430 532 560 572"
+              fill="none"
+              stroke="#e0b35c"
+              stroke-width="2.2"
+              stroke-linecap="round"
+              opacity="0.78"
+            />
+            <circle cx="210" cy="590" r="3.4" fill="#e0b35c" />
+            <circle cx="370" cy="542" r="2.6" fill="#f3ead7" />
+            <circle cx="560" cy="572" r="3.4" fill="#e0b35c" />
+            <g fill="#123a54" opacity="0.9">
+              <circle cx="352" cy="538" r="3.2" />
+              <path d="M349 542 L347 556 L351 556 L350 548 L355 556 L358 556 L353 547 L355 542 Z" />
+              <circle cx="364" cy="536" r="2.7" />
+              <path d="M362 540 L360 552 L363 552 L363 546 L366 552 L369 552 L365 545 L366 540 Z" />
+            </g>
+          </svg>
+          <div class="hero-veil"></div>
+          <div class="shimmer"></div>
+        </div>
       </section>
 
       <section class="film" aria-labelledby="film-title">
-        <div class="film-hud">
-          <span>Trail cam</span>
-          <b data-i18n="filmTitle">Coming soon</b>
-        </div>
         <h2 id="film-title" class="visually-hidden" data-i18n="filmTitle">Coming soon</h2>
         <div class="film-frame">
           <video
@@ -720,11 +900,13 @@
       <div class="bubbles" id="bubbles" aria-hidden="true"></div>
 
       <section class="paths">
-        <div class="paths-intro">
-          <h2 data-i18n="pathsTitle">Three ways in</h2>
-          <p data-i18n="pathsLede">
-            Pick the door that fits your day. Company first. Outdoors always.
-          </p>
+        <div class="paths-head">
+          <div class="paths-intro">
+            <h2 data-i18n="pathsTitle">Three ways in</h2>
+            <p data-i18n="pathsLede">
+              Pick the door that fits your day. Company first. Outdoors always.
+            </p>
+          </div>
         </div>
         <div class="path-list">
           <article class="path">
@@ -755,7 +937,9 @@
               <div class="path-index">02</div>
             </div>
             <h3 data-i18n="joinTitle">Join someone nearby</h3>
-            <p data-i18n="joinBody">Find an outing close by and walk with people who share your pace.</p>
+            <p data-i18n="joinBody">
+              Find an outing close by and walk with people who share your pace.
+            </p>
           </article>
           <article class="path">
             <div class="path-top">
@@ -808,7 +992,8 @@
             joinTitle: "Join someone nearby",
             joinBody: "Find an outing close by and walk with people who share your pace.",
             aiTitle: "Try an AI guided adventure",
-            aiBody: "Soft suggestions for fresh routes when you want a little magic on the map.",
+            aiBody:
+              "Soft suggestions for fresh routes when you want a little magic on the map.",
             filmTitle: "Coming soon",
             contactTitle: "Say hello",
             place: "Milan, Italy",
@@ -826,7 +1011,8 @@
             pathsTitle: "Tre porte di ingresso",
             pathsLede: "Scegli quella che ti serve oggi. Prima le persone. Sempre all’aperto.",
             hostTitle: "Organizza un’avventura",
-            hostBody: "Traccia il percorso, invita compagni e apri la giornata a chi vuole unirsi.",
+            hostBody:
+              "Traccia il percorso, invita compagni e apri la giornata a chi vuole unirsi.",
             joinTitle: "Unisciti a qualcuno vicino",
             joinBody: "Trova un’uscita qui intorno e cammina con chi ha il tuo ritmo.",
             aiTitle: "Prova un’avventura guidata dall’AI",
@@ -881,7 +1067,10 @@
             var el = document.createElement("span");
             el.className = "bubble";
             el.textContent = word;
-            if (reduceMotion) el.style.opacity = "0.7";
+            if (reduceMotion) {
+              el.style.animation = "none";
+              el.style.opacity = "0.55";
+            }
             bubbleRoot.appendChild(el);
           });
         }
