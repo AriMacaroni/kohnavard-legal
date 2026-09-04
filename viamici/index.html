@@ -96,43 +96,25 @@
 
       .edge-cloud {
         position: absolute;
-        background: rgba(255, 252, 245, 0.38);
-        filter: blur(10px);
+        background: rgba(255, 252, 245, 0.62);
+        filter: blur(6px);
         border-radius: 999px;
-        animation: edgeCloud 48s linear infinite;
+        animation: edgeCloud 36s linear infinite;
       }
 
-      .edge-cloud.c1 {
-        width: 9rem;
-        height: 2.2rem;
-        top: 18%;
-        left: -4rem;
-      }
-
-      .edge-cloud.c2 {
-        width: 7rem;
-        height: 1.7rem;
-        top: 28%;
-        right: -3.5rem;
-        animation-duration: 62s;
-        animation-direction: reverse;
-      }
-
-      .edge-cloud.c3 {
-        width: 5.5rem;
-        height: 1.4rem;
-        top: 58%;
-        left: -2.8rem;
-        animation-duration: 54s;
-        animation-delay: -20s;
-      }
+      .edge-cloud.c1 { width: 11rem; height: 2.6rem; top: 14%; left: -5rem; }
+      .edge-cloud.c2 { width: 8.5rem; height: 2rem; top: 24%; right: -4rem; animation-duration: 48s; animation-direction: reverse; }
+      .edge-cloud.c3 { width: 7rem; height: 1.7rem; top: 40%; left: -3rem; animation-duration: 42s; animation-delay: -16s; }
+      .edge-cloud.c4 { width: 9rem; height: 2.1rem; top: 52%; right: -4.5rem; animation-duration: 52s; animation-delay: -8s; }
+      .edge-cloud.c5 { width: 6rem; height: 1.5rem; top: 66%; left: -2.4rem; animation-duration: 40s; animation-delay: -22s; }
+      .edge-cloud.c6 { width: 7.5rem; height: 1.8rem; top: 12%; right: 6%; animation-duration: 56s; animation-direction: reverse; animation-delay: -12s; }
 
       .meadow-edge {
         position: absolute;
         left: -4%;
         right: -4%;
         bottom: -2px;
-        height: 7.5rem;
+        height: 10.5rem;
       }
 
       .meadow-edge svg {
@@ -143,76 +125,89 @@
 
       .grass-wave {
         transform-origin: center bottom;
-        animation: grassSway 7s ease-in-out infinite;
+        animation: grassSway 6.5s ease-in-out infinite;
       }
 
-      .grass-wave.b {
-        animation-duration: 9s;
-        animation-delay: -2.4s;
-      }
+      .grass-wave.b { animation-duration: 8.5s; animation-delay: -2.4s; }
+      .grass-wave.c { animation-duration: 10s; animation-delay: -4s; }
 
       .glow-bug {
         position: absolute;
-        width: 4px;
-        height: 4px;
+        width: 5px;
+        height: 5px;
         border-radius: 50%;
-        background: rgba(232, 214, 120, 0.85);
-        box-shadow: 0 0 8px rgba(232, 214, 120, 0.55);
-        animation: bugGlow 5.5s ease-in-out infinite;
+        background: rgba(232, 214, 120, 0.95);
+        box-shadow: 0 0 10px rgba(232, 214, 120, 0.7);
+        animation: bugGlow 4.8s ease-in-out infinite;
       }
 
-      .glow-bug.b1 {
-        left: 8%;
-        bottom: 3.2rem;
+      .glow-bug.b1 { left: 6%; bottom: 3.2rem; }
+      .glow-bug.b2 { right: 8%; bottom: 4.8rem; animation-delay: -1.4s; }
+      .glow-bug.b3 { left: 16%; bottom: 2.2rem; animation-delay: -2.8s; }
+      .glow-bug.b4 { right: 18%; bottom: 5.6rem; animation-delay: -0.6s; }
+      .glow-bug.b5 { left: 28%; bottom: 6.4rem; animation-delay: -3.5s; }
+      .glow-bug.b6 { right: 32%; bottom: 2.8rem; animation-delay: -2s; }
+      .glow-bug.b7 { left: 40%; bottom: 1.6rem; animation-delay: -1s; }
+      .glow-bug.b8 { right: 42%; bottom: 7rem; animation-delay: -4.1s; }
+      .glow-bug.b9 { left: 72%; bottom: 3.8rem; animation-delay: -2.2s; }
+      .glow-bug.b10 { right: 58%; bottom: 4.2rem; animation-delay: -3s; }
+
+      .leaf {
+        position: absolute;
+        width: 10px;
+        height: 16px;
+        border-radius: 0 70% 0 70%;
+        background: rgba(111, 145, 86, 0.55);
+        animation: leafFall 16s linear infinite;
       }
 
-      .glow-bug.b2 {
-        right: 11%;
-        bottom: 4.6rem;
-        animation-delay: -1.8s;
+      .leaf.l1 { left: 5%; top: -8%; animation-duration: 15s; }
+      .leaf.l2 { left: 12%; top: -12%; animation-duration: 19s; animation-delay: -6s; background: rgba(184, 132, 62, 0.45); }
+      .leaf.l3 { right: 7%; top: -10%; animation-duration: 17s; animation-delay: -3s; }
+      .leaf.l4 { right: 14%; top: -16%; animation-duration: 21s; animation-delay: -9s; background: rgba(184, 132, 62, 0.4); }
+      .leaf.l5 { left: 88%; top: -8%; animation-duration: 18s; animation-delay: -11s; }
+
+      .edge-bird {
+        position: absolute;
+        width: 18px;
+        height: 8px;
+        border: solid #4a5d48;
+        border-width: 0 0 2px 0;
+        border-radius: 0 0 100% 100%;
+        opacity: 0.45;
+        animation: edgeFlock 22s linear infinite;
       }
 
-      .glow-bug.b3 {
-        left: 22%;
-        bottom: 2.1rem;
-        animation-delay: -3.2s;
-      }
-
-      .glow-bug.b4 {
-        right: 28%;
-        bottom: 5.4rem;
-        animation-delay: -0.7s;
-      }
+      .edge-bird.e1 { top: 22%; left: -2rem; }
+      .edge-bird.e2 { top: 20%; left: -1.2rem; animation-delay: -2s; animation-duration: 24s; }
+      .edge-bird.e3 { top: 34%; right: -2rem; animation-direction: reverse; animation-duration: 26s; }
 
       @keyframes edgeCloud {
-        from {
-          transform: translateX(0);
-        }
-        to {
-          transform: translateX(18vw);
-        }
+        from { transform: translateX(0); }
+        to { transform: translateX(22vw); }
       }
 
       @keyframes grassSway {
-        0%,
-        100% {
-          transform: translateY(0) scaleY(1);
-        }
-        50% {
-          transform: translateY(-4px) scaleY(1.03);
-        }
+        0%, 100% { transform: translateY(0) scaleY(1); }
+        50% { transform: translateY(-7px) scaleY(1.045); }
       }
 
       @keyframes bugGlow {
-        0%,
-        100% {
-          opacity: 0.15;
-          transform: translateY(0);
-        }
-        50% {
-          opacity: 0.9;
-          transform: translateY(-10px);
-        }
+        0%, 100% { opacity: 0.2; transform: translateY(0); }
+        50% { opacity: 1; transform: translateY(-14px); }
+      }
+
+      @keyframes leafFall {
+        0% { transform: translate3d(0, 0, 0) rotate(0deg); opacity: 0; }
+        8% { opacity: 0.7; }
+        100% { transform: translate3d(40px, 110vh, 0) rotate(220deg); opacity: 0; }
+      }
+
+      @keyframes edgeFlock {
+        0% { transform: translateX(0) translateY(0); opacity: 0; }
+        10% { opacity: 0.5; }
+        90% { opacity: 0.5; }
+        100% { transform: translateX(30vw) translateY(-18px); opacity: 0; }
       }
 
       .wrap {
@@ -1082,23 +1077,46 @@
       <span class="edge-cloud c1"></span>
       <span class="edge-cloud c2"></span>
       <span class="edge-cloud c3"></span>
+      <span class="edge-cloud c4"></span>
+      <span class="edge-cloud c5"></span>
+      <span class="edge-cloud c6"></span>
       <span class="glow-bug b1"></span>
       <span class="glow-bug b2"></span>
       <span class="glow-bug b3"></span>
       <span class="glow-bug b4"></span>
+      <span class="glow-bug b5"></span>
+      <span class="glow-bug b6"></span>
+      <span class="glow-bug b7"></span>
+      <span class="glow-bug b8"></span>
+      <span class="glow-bug b9"></span>
+      <span class="glow-bug b10"></span>
+      <span class="leaf l1"></span>
+      <span class="leaf l2"></span>
+      <span class="leaf l3"></span>
+      <span class="leaf l4"></span>
+      <span class="leaf l5"></span>
+      <span class="edge-bird e1"></span>
+      <span class="edge-bird e2"></span>
+      <span class="edge-bird e3"></span>
       <div class="meadow-edge">
-        <svg viewBox="0 0 1440 160" preserveAspectRatio="none">
+        <svg viewBox="0 0 1440 180" preserveAspectRatio="none">
           <path
             class="grass-wave"
-            d="M0 92 C180 70 320 110 520 86 C760 56 980 118 1200 80 C1320 62 1400 78 1440 70 L1440 160 L0 160 Z"
+            d="M0 78 C180 52 340 102 560 74 C820 40 1020 108 1240 68 C1340 50 1400 64 1440 58 L1440 180 L0 180 Z"
             fill="#cfe0c4"
-            opacity="0.42"
+            opacity="0.55"
           />
           <path
             class="grass-wave b"
-            d="M0 118 C220 98 420 136 680 112 C940 86 1120 138 1440 108 L1440 160 L0 160 Z"
+            d="M0 108 C220 86 420 132 680 104 C940 74 1140 136 1440 100 L1440 180 L0 180 Z"
             fill="#b7d0aa"
-            opacity="0.38"
+            opacity="0.5"
+          />
+          <path
+            class="grass-wave c"
+            d="M0 138 C260 120 480 156 760 132 C1040 108 1220 158 1440 136 L1440 180 L0 180 Z"
+            fill="#9fbe90"
+            opacity="0.36"
           />
         </svg>
       </div>
