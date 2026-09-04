@@ -1,0 +1,1596 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Viamici · Find your community and go on adventures</title>
+    <meta
+      name="description"
+      content="Viamici brings people together outdoors. Host a trek, join others, or explore AI guided routes. Coming soon on Google Play and the App Store. Milan, Italy."
+    />
+    <meta property="og:title" content="Viamici" />
+    <meta
+      property="og:description"
+      content="Find your community and go on adventures. Coming soon on Google Play and the App Store."
+    />
+    <meta property="og:url" content="https://viamici.com/" />
+    <meta property="og:image" content="https://viamici.com/og-default.png" />
+    <meta name="theme-color" content="#F6E8D0" />
+    <link rel="icon" href="./favicon.png" />
+    <link rel="apple-touch-icon" href="./apple-touch.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Sora:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --lake: #1b4f72;
+        --lake-deep: #123a54;
+        --forest: #2f7d5b;
+        --forest-soft: #5fa88a;
+        --leaf: #8fbf7a;
+        --meadow: #f3eee4;
+        --sky: #4a8ba8;
+        --honey: #d0892a;
+        --ink: #1c241c;
+        --muted: #5d6758;
+        --paper: #fff8ee;
+        --line: rgba(47, 125, 91, 0.16);
+        --ease: cubic-bezier(0.22, 1, 0.36, 1);
+        --shell: 82rem;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        color: var(--ink);
+        font-family: Sora, system-ui, sans-serif;
+        font-weight: 400;
+        line-height: 1.55;
+        background: var(--meadow);
+        overflow-x: hidden;
+      }
+
+      a {
+        color: inherit;
+      }
+
+      .bg {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        background:
+          radial-gradient(42rem 28rem at 80% -6%, rgba(255, 186, 92, 0.42), transparent 58%),
+          radial-gradient(36rem 22rem at 12% 0%, rgba(255, 220, 170, 0.4), transparent 52%),
+          radial-gradient(48rem 26rem at 50% 100%, rgba(47, 125, 91, 0.14), transparent 55%),
+          linear-gradient(180deg, #ffe7c4 0%, #f7efe2 28%, #eef3e8 62%, #e4eee4 100%);
+      }
+
+      .grain {
+        position: fixed;
+        inset: 0;
+        z-index: 1;
+        pointer-events: none;
+        opacity: 0.22;
+        mix-blend-mode: multiply;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
+      }
+
+      .shire {
+        position: fixed;
+        inset: 0;
+        z-index: 1;
+        pointer-events: none;
+        overflow: hidden;
+      }
+
+      .edge-cloud {
+        position: absolute;
+        background: rgba(255, 252, 245, 0.62);
+        filter: blur(6px);
+        border-radius: 999px;
+        animation: edgeCloud 36s linear infinite;
+      }
+
+      .edge-cloud.c1 { width: 11rem; height: 2.6rem; top: 14%; left: -5rem; }
+      .edge-cloud.c2 { width: 8.5rem; height: 2rem; top: 24%; right: -4rem; animation-duration: 48s; animation-direction: reverse; }
+      .edge-cloud.c3 { width: 7rem; height: 1.7rem; top: 40%; left: -3rem; animation-duration: 42s; animation-delay: -16s; }
+      .edge-cloud.c4 { width: 9rem; height: 2.1rem; top: 52%; right: -4.5rem; animation-duration: 52s; animation-delay: -8s; }
+      .edge-cloud.c5 { width: 6rem; height: 1.5rem; top: 66%; left: -2.4rem; animation-duration: 40s; animation-delay: -22s; }
+      .edge-cloud.c6 { width: 7.5rem; height: 1.8rem; top: 12%; right: 6%; animation-duration: 56s; animation-direction: reverse; animation-delay: -12s; }
+
+      .meadow-edge {
+        position: absolute;
+        left: -4%;
+        right: -4%;
+        bottom: -2px;
+        height: 10.5rem;
+      }
+
+      .meadow-edge svg {
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
+
+      .grass-wave {
+        transform-origin: center bottom;
+        animation: grassSway 6.5s ease-in-out infinite;
+      }
+
+      .grass-wave.b { animation-duration: 8.5s; animation-delay: -2.4s; }
+      .grass-wave.c { animation-duration: 10s; animation-delay: -4s; }
+
+      .glow-bug {
+        position: absolute;
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: rgba(232, 214, 120, 0.95);
+        box-shadow: 0 0 10px rgba(232, 214, 120, 0.7);
+        animation: bugGlow 4.8s ease-in-out infinite;
+      }
+
+      .glow-bug.b1 { left: 6%; bottom: 3.2rem; }
+      .glow-bug.b2 { right: 8%; bottom: 4.8rem; animation-delay: -1.4s; }
+      .glow-bug.b3 { left: 16%; bottom: 2.2rem; animation-delay: -2.8s; }
+      .glow-bug.b4 { right: 18%; bottom: 5.6rem; animation-delay: -0.6s; }
+      .glow-bug.b5 { left: 28%; bottom: 6.4rem; animation-delay: -3.5s; }
+      .glow-bug.b6 { right: 32%; bottom: 2.8rem; animation-delay: -2s; }
+      .glow-bug.b7 { left: 40%; bottom: 1.6rem; animation-delay: -1s; }
+      .glow-bug.b8 { right: 42%; bottom: 7rem; animation-delay: -4.1s; }
+      .glow-bug.b9 { left: 72%; bottom: 3.8rem; animation-delay: -2.2s; }
+      .glow-bug.b10 { right: 58%; bottom: 4.2rem; animation-delay: -3s; }
+
+      .leaf {
+        position: absolute;
+        width: 10px;
+        height: 16px;
+        border-radius: 0 70% 0 70%;
+        background: rgba(111, 145, 86, 0.55);
+        animation: leafFall 16s linear infinite;
+      }
+
+      .leaf.l1 { left: 5%; top: -8%; animation-duration: 15s; }
+      .leaf.l2 { left: 12%; top: -12%; animation-duration: 19s; animation-delay: -6s; background: rgba(184, 132, 62, 0.45); }
+      .leaf.l3 { right: 7%; top: -10%; animation-duration: 17s; animation-delay: -3s; }
+      .leaf.l4 { right: 14%; top: -16%; animation-duration: 21s; animation-delay: -9s; background: rgba(184, 132, 62, 0.4); }
+      .leaf.l5 { left: 88%; top: -8%; animation-duration: 18s; animation-delay: -11s; }
+
+      .edge-bird {
+        position: absolute;
+        width: 72px;
+        height: 34px;
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      .edge-bird svg {
+        width: 100%;
+        height: 100%;
+        display: block;
+        overflow: visible;
+      }
+
+      .edge-bird .body,
+      .edge-bird .wing {
+        fill: #2a3d2e;
+      }
+
+      .edge-bird .wing {
+        transform-origin: 40px 22px;
+        animation: wingBeat 0.52s ease-in-out infinite;
+      }
+
+      .edge-bird.e1 {
+        top: 3.6%;
+        left: -4.5rem;
+        animation: edgeFlock 22s linear infinite;
+      }
+
+      .edge-bird.e2 {
+        top: 7.2%;
+        left: -6rem;
+        width: 54px;
+        height: 26px;
+        animation: edgeFlockLow 28s linear infinite;
+        animation-delay: -14s;
+      }
+
+      @keyframes edgeCloud {
+        from { transform: translateX(0); }
+        to { transform: translateX(22vw); }
+      }
+
+      @keyframes grassSway {
+        0%, 100% { transform: translateY(0) scaleY(1); }
+        50% { transform: translateY(-7px) scaleY(1.045); }
+      }
+
+      @keyframes bugGlow {
+        0%, 100% { opacity: 0.2; transform: translateY(0); }
+        50% { opacity: 1; transform: translateY(-14px); }
+      }
+
+      @keyframes leafFall {
+        0% { transform: translate3d(0, 0, 0) rotate(0deg); opacity: 0; }
+        8% { opacity: 0.7; }
+        100% { transform: translate3d(40px, 110vh, 0) rotate(220deg); opacity: 0; }
+      }
+
+      @keyframes edgeFlock {
+        0% { transform: translate3d(0, 8px, 0); opacity: 0; }
+        6% { opacity: 0.82; }
+        40% { transform: translate3d(46vw, -10px, 0); }
+        92% { opacity: 0.82; }
+        100% { transform: translate3d(112vw, 4px, 0); opacity: 0; }
+      }
+
+      @keyframes edgeFlockLow {
+        0% { transform: translate3d(0, 0, 0); opacity: 0; }
+        8% { opacity: 0.7; }
+        45% { transform: translate3d(50vw, 8px, 0); }
+        93% { opacity: 0.7; }
+        100% { transform: translate3d(118vw, -4px, 0); opacity: 0; }
+      }
+
+      @keyframes wingBeat {
+        0%,
+        100% {
+          transform: rotate(0deg);
+        }
+        50% {
+          transform: rotate(-34deg);
+        }
+      }
+
+      .wrap {
+        position: relative;
+        z-index: 2;
+        width: min(var(--shell), calc(100% - 2.5rem));
+        margin: 0 auto;
+        padding: 1.25rem 0 4.5rem;
+      }
+
+      header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.7rem;
+        text-decoration: none;
+      }
+
+      .mark {
+        width: 2.35rem;
+        height: 2.35rem;
+        border-radius: 0.85rem;
+        background: linear-gradient(145deg, var(--lake-deep), var(--forest));
+        display: grid;
+        place-items: center;
+        box-shadow: 0 10px 28px rgba(47, 125, 91, 0.22);
+      }
+
+      .mark svg {
+        width: 1.15rem;
+        height: 1.15rem;
+      }
+
+      .brand-name {
+        font-family: Fraunces, Georgia, serif;
+        font-weight: 600;
+        font-size: 1.35rem;
+        letter-spacing: -0.02em;
+        color: var(--lake-deep);
+      }
+
+      .lang {
+        display: inline-flex;
+        padding: 0.2rem;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.62);
+        border: 1px solid var(--line);
+        backdrop-filter: blur(10px);
+      }
+
+      .lang button {
+        appearance: none;
+        border: 0;
+        background: transparent;
+        color: var(--muted);
+        font: 500 0.78rem/1 Sora, sans-serif;
+        letter-spacing: 0.04em;
+        padding: 0.55rem 0.85rem;
+        border-radius: 999px;
+        cursor: pointer;
+        transition: background 0.25s var(--ease), color 0.25s var(--ease);
+      }
+
+      .lang button[aria-pressed="true"] {
+        background: var(--forest);
+        color: #fff;
+      }
+
+      .hero {
+        position: relative;
+        min-height: calc(100svh - 5.25rem);
+        display: grid;
+        align-content: end;
+        gap: 1.2rem;
+        margin: 1rem -1.25rem 0;
+        padding: 3.25rem 1.25rem 2.4rem;
+        overflow: hidden;
+      }
+
+      .hero-copy {
+        position: relative;
+        z-index: 2;
+        max-width: 34rem;
+        animation: riseIn 1.1s var(--ease) both;
+      }
+
+      .eyebrow {
+        margin: 0 0 0.85rem;
+        font-size: 0.74rem;
+        font-weight: 500;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--honey);
+      }
+
+      h1.brand-hero {
+        margin: 0 0 0.85rem;
+        font-family: Fraunces, Georgia, serif;
+        font-weight: 700;
+        font-size: clamp(3.1rem, 12vw, 4.4rem);
+        line-height: 0.94;
+        letter-spacing: -0.045em;
+        color: var(--lake-deep);
+      }
+
+      .slogan {
+        margin: 0 0 0.8rem;
+        font-family: Fraunces, Georgia, serif;
+        font-weight: 500;
+        font-size: clamp(1.28rem, 4.4vw, 1.7rem);
+        line-height: 1.28;
+        letter-spacing: -0.02em;
+        color: var(--ink);
+        max-width: 16ch;
+      }
+
+      .lede {
+        margin: 0;
+        color: var(--muted);
+        font-size: 1.02rem;
+        max-width: 38ch;
+        font-weight: 300;
+      }
+
+      .cta-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.7rem;
+        margin-top: 1.15rem;
+      }
+
+      .cta {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.65rem;
+        padding: 0.82rem 1.1rem;
+        border-radius: 999px;
+        text-decoration: none;
+        border: 1px solid transparent;
+        transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease);
+      }
+
+      .cta:hover {
+        transform: translateY(-2px);
+      }
+
+      .cta-primary {
+        background: var(--forest);
+        color: #fff;
+        box-shadow: 0 14px 34px rgba(47, 125, 91, 0.28);
+      }
+
+      .cta-secondary {
+        background: rgba(255, 255, 255, 0.78);
+        border-color: var(--line);
+        color: var(--lake-deep);
+      }
+
+      .cta small {
+        display: block;
+        font-size: 0.68rem;
+        opacity: 0.78;
+        font-weight: 400;
+      }
+
+      .cta strong {
+        display: block;
+        font-size: 0.92rem;
+        font-weight: 600;
+      }
+
+      .hero-art {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+      }
+
+      .hero-art svg {
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
+
+      .hero-veil {
+        position: absolute;
+        inset: 0;
+        background:
+          linear-gradient(90deg, rgba(255, 244, 226, 0.92) 0%, rgba(255, 244, 226, 0.5) 36%, rgba(255, 244, 226, 0.08) 58%, transparent 74%),
+          linear-gradient(180deg, transparent 46%, rgba(255, 244, 226, 0.4) 100%);
+      }
+
+      .art-chip {
+        display: none;
+      }
+
+      .shimmer {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          110deg,
+          transparent 30%,
+          rgba(255, 255, 255, 0.18) 48%,
+          transparent 62%
+        );
+        transform: translateX(-60%);
+        animation: shimmer 8s var(--ease) infinite;
+        pointer-events: none;
+      }
+
+      .sun-halo {
+        transform-origin: 690px 168px;
+        animation: sunBreathe 8s ease-in-out infinite;
+      }
+
+      .sun-core {
+        transform-origin: 690px 168px;
+        animation: sunPulse 7s ease-in-out infinite;
+      }
+
+      .rays {
+        transform-origin: 690px 168px;
+        animation: rayDrift 14s ease-in-out infinite;
+      }
+
+      .mist-band {
+        animation: mistDrift 18s ease-in-out infinite;
+      }
+
+      .mist-band.late {
+        animation-duration: 24s;
+        animation-delay: -7s;
+      }
+
+      .cloud {
+        fill: #fff7ea;
+        opacity: 0.42;
+        animation: cloudDrift 42s linear infinite;
+      }
+
+      .cloud.slow {
+        opacity: 0.3;
+        animation-duration: 58s;
+        animation-delay: -18s;
+      }
+
+      .birds {
+        animation: flock 28s linear infinite;
+      }
+
+      .bird {
+        fill: none;
+        stroke: #123a54;
+        stroke-width: 1.6;
+        stroke-linecap: round;
+        opacity: 0.55;
+      }
+
+      .trail-line {
+        stroke-dasharray: 8 10;
+        animation: trailWalk 7s linear infinite;
+      }
+
+      .lake-shine {
+        animation: lakeWink 6s ease-in-out infinite;
+      }
+
+      .pollen {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        overflow: hidden;
+      }
+
+      .pollen i {
+        position: absolute;
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: rgba(255, 214, 130, 0.7);
+        filter: blur(0.4px);
+        animation: mote 16s linear infinite;
+      }
+
+      .pollen i:nth-child(2) {
+        left: 28%;
+        animation-duration: 21s;
+        animation-delay: -4s;
+        background: rgba(255, 255, 255, 0.65);
+      }
+
+      .pollen i:nth-child(3) {
+        left: 62%;
+        animation-duration: 18s;
+        animation-delay: -9s;
+      }
+
+      .pollen i:nth-child(4) {
+        left: 78%;
+        animation-duration: 23s;
+        animation-delay: -2s;
+        width: 3px;
+        height: 3px;
+      }
+
+      .pollen i:nth-child(5) {
+        left: 44%;
+        animation-duration: 19s;
+        animation-delay: -12s;
+        background: rgba(224, 179, 92, 0.55);
+      }
+
+      .art-chip {
+        animation: chipFloat 5s ease-in-out infinite;
+      }
+
+      .bubbles {
+        position: relative;
+        z-index: 2;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.5rem 0.62rem;
+        margin: 0.85rem 0 1.85rem;
+        min-height: 2.5rem;
+        pointer-events: none;
+      }
+
+      .bubble {
+        white-space: nowrap;
+        padding: 0.4rem 0.82rem;
+        border-radius: 999px;
+        font-size: 0.76rem;
+        font-weight: 500;
+        letter-spacing: 0.02em;
+        color: rgba(18, 58, 84, 0.52);
+        background: rgba(255, 255, 255, 0.5);
+        border: 1px solid rgba(47, 125, 91, 0.12);
+        backdrop-filter: blur(6px);
+        animation: bobSoft 5.5s ease-in-out infinite;
+        opacity: 0.78;
+      }
+
+      .bubble:nth-child(2n) {
+        animation-delay: -1.2s;
+      }
+
+      .bubble:nth-child(3n) {
+        animation-delay: -2.4s;
+        opacity: 0.58;
+      }
+
+      .bubble:nth-child(4n) {
+        animation-delay: -0.6s;
+      }
+
+      .film {
+        width: min(56rem, 100%);
+        margin: 1.75rem auto 0;
+      }
+
+      .film-frame {
+        position: relative;
+        aspect-ratio: 16 / 9;
+        border-radius: 1.35rem;
+        overflow: hidden;
+        background: #2a3a2e;
+        box-shadow:
+          0 24px 60px rgba(80, 52, 18, 0.14),
+          0 0 0 1px rgba(255, 236, 204, 0.7) inset;
+      }
+
+      .film-frame video {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        background: #0d2433;
+      }
+
+      .paths {
+        margin-top: 0.35rem;
+        display: grid;
+        gap: 1.35rem;
+      }
+
+      .paths-intro {
+        max-width: 32rem;
+      }
+
+      .paths-intro h2 {
+        margin: 0 0 0.4rem;
+        font-family: Fraunces, Georgia, serif;
+        font-size: clamp(1.55rem, 3vw, 2.05rem);
+        letter-spacing: -0.03em;
+        color: var(--lake-deep);
+      }
+
+      .paths-intro p {
+        margin: 0;
+        color: var(--muted);
+        font-weight: 300;
+      }
+
+      .path-list {
+        display: grid;
+        gap: 0.85rem;
+      }
+
+      .path {
+        background: rgba(255, 250, 240, 0.86);
+        border: 1px solid var(--line);
+        border-radius: 1.35rem;
+        padding: 1.35rem 1.25rem 1.3rem;
+        backdrop-filter: blur(8px);
+        transition:
+          transform 0.35s var(--ease),
+          box-shadow 0.35s var(--ease),
+          border-color 0.35s var(--ease);
+      }
+
+      .path-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 0.9rem;
+      }
+
+      .path-icon {
+        width: 2.15rem;
+        height: 2.15rem;
+        border-radius: 0.75rem;
+        display: grid;
+        place-items: center;
+        background: rgba(47, 125, 91, 0.1);
+        color: var(--forest);
+      }
+
+      .path-icon svg {
+        width: 1.05rem;
+        height: 1.05rem;
+      }
+
+      .path-index {
+        font-family: Fraunces, Georgia, serif;
+        font-size: 0.92rem;
+        color: var(--forest);
+      }
+
+      .path h3 {
+        margin: 0 0 0.5rem;
+        font-family: Fraunces, Georgia, serif;
+        font-size: 1.22rem;
+        letter-spacing: -0.02em;
+        color: var(--lake-deep);
+      }
+
+      .path p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.94rem;
+        font-weight: 300;
+      }
+
+      .contact {
+        margin-top: 2.75rem;
+        padding: 1.7rem 1.4rem;
+        border-radius: 1.5rem;
+        background: linear-gradient(145deg, rgba(27, 79, 114, 0.96), rgba(47, 125, 91, 0.92));
+        color: #edf6f0;
+        display: grid;
+        gap: 0.85rem;
+      }
+
+      .contact h2 {
+        margin: 0;
+        font-family: Fraunces, Georgia, serif;
+        font-size: 1.5rem;
+        letter-spacing: -0.02em;
+      }
+
+      .contact .place {
+        margin: 0.2rem 0 0;
+        color: rgba(237, 246, 240, 0.74);
+        font-weight: 300;
+      }
+
+      .contact a {
+        color: #f0d7a0;
+        text-decoration: none;
+        font-size: 1.08rem;
+        font-weight: 500;
+        justify-self: start;
+      }
+
+      .contact a:hover {
+        text-decoration: underline;
+      }
+
+      footer {
+        margin-top: 1.75rem;
+        color: var(--muted);
+        font-size: 0.82rem;
+        font-weight: 300;
+      }
+
+      .visually-hidden {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
+
+      [data-i18n] {
+        transition: opacity 0.2s ease;
+      }
+
+      html.is-switching [data-i18n] {
+        opacity: 0.35;
+      }
+
+      @keyframes shimmer {
+        0%,
+        18% {
+          transform: translateX(-70%);
+        }
+        55%,
+        100% {
+          transform: translateX(120%);
+        }
+      }
+
+      @keyframes bobSoft {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-5px);
+        }
+      }
+
+      @keyframes riseIn {
+        from {
+          opacity: 0;
+          transform: translateY(14px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes sunBreathe {
+        0%,
+        100% {
+          opacity: 0.26;
+          transform: scale(1);
+        }
+        50% {
+          opacity: 0.4;
+          transform: scale(1.08);
+        }
+      }
+
+      @keyframes sunPulse {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.04);
+        }
+      }
+
+      @keyframes rayDrift {
+        0%,
+        100% {
+          opacity: 0.38;
+        }
+        50% {
+          opacity: 0.58;
+        }
+      }
+
+      @keyframes mistDrift {
+        0%,
+        100% {
+          transform: translateX(0);
+          opacity: 0.55;
+        }
+        50% {
+          transform: translateX(28px);
+          opacity: 0.85;
+        }
+      }
+
+      @keyframes cloudDrift {
+        from {
+          transform: translateX(-80px);
+        }
+        to {
+          transform: translateX(140px);
+        }
+      }
+
+      @keyframes flock {
+        0% {
+          transform: translate(-80px, 12px);
+          opacity: 0;
+        }
+        8% {
+          opacity: 0.7;
+        }
+        86% {
+          opacity: 0.7;
+        }
+        100% {
+          transform: translate(980px, -40px);
+          opacity: 0;
+        }
+      }
+
+      @keyframes trailWalk {
+        to {
+          stroke-dashoffset: -36;
+        }
+      }
+
+      @keyframes lakeWink {
+        0%,
+        100% {
+          opacity: 0.55;
+        }
+        50% {
+          opacity: 0.95;
+        }
+      }
+
+      @keyframes mote {
+        0% {
+          transform: translate3d(0, 110%, 0);
+          opacity: 0;
+        }
+        12% {
+          opacity: 0.7;
+        }
+        100% {
+          transform: translate3d(18px, -20%, 0);
+          opacity: 0;
+        }
+      }
+
+      @keyframes chipFloat {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-4px);
+        }
+      }
+
+      @media (min-width: 960px) {
+        .wrap {
+          width: min(var(--shell), calc(100% - 4.5rem));
+          padding: 1.6rem 0 5.5rem;
+        }
+
+        .hero {
+          min-height: 0;
+          display: grid;
+          grid-template-columns: minmax(20rem, 0.86fr) minmax(28rem, 1.22fr);
+          align-items: center;
+          align-content: initial;
+          gap: 2.4rem 3.25rem;
+          margin: 1.7rem 0 0;
+          padding: 0.35rem 0 0;
+          overflow: visible;
+        }
+
+        .hero-copy {
+          max-width: 36rem;
+        }
+
+        h1.brand-hero {
+          font-size: clamp(3.4rem, 4.6vw, 4.55rem);
+        }
+
+        .slogan {
+          font-size: clamp(1.45rem, 1.7vw, 1.75rem);
+          max-width: 15ch;
+        }
+
+        .lede {
+          font-size: 1.05rem;
+          max-width: 34ch;
+        }
+
+        .hero-art {
+          position: relative;
+          inset: auto;
+          height: min(34rem, 62vh);
+          border-radius: 2rem;
+          overflow: hidden;
+          box-shadow:
+            0 28px 70px rgba(18, 58, 84, 0.16),
+            0 0 0 1px rgba(255, 255, 255, 0.35) inset;
+        }
+
+        .hero-veil {
+          display: none;
+        }
+
+        .art-chip {
+          display: inline-flex;
+          position: absolute;
+          top: 1.15rem;
+          left: 1.15rem;
+          z-index: 2;
+          padding: 0.42rem 0.75rem;
+          border-radius: 999px;
+          font-size: 0.72rem;
+          font-weight: 500;
+          letter-spacing: 0.04em;
+          color: var(--lake-deep);
+          background: rgba(247, 251, 247, 0.72);
+          border: 1px solid rgba(255, 255, 255, 0.55);
+          backdrop-filter: blur(10px);
+        }
+
+        .film {
+          width: 100%;
+          margin: 2.2rem 0 0;
+        }
+
+        .film-frame {
+          border-radius: 1.6rem;
+          box-shadow:
+            0 28px 70px rgba(92, 58, 18, 0.14),
+            0 0 0 1px rgba(255, 236, 204, 0.75) inset;
+        }
+
+        .bubbles {
+          justify-content: center;
+          max-width: none;
+          margin: 1.35rem 0 2.8rem;
+        }
+
+        .paths {
+          margin-top: 0.85rem;
+          gap: 1.85rem;
+        }
+
+        .paths-head {
+          display: flex;
+          align-items: end;
+          justify-content: space-between;
+          gap: 2rem;
+        }
+
+        .paths-intro {
+          display: flex;
+          align-items: end;
+          justify-content: space-between;
+          gap: 2.5rem;
+          max-width: none;
+        }
+
+        .paths-intro h2 {
+          margin: 0;
+          flex: 0 1 22rem;
+        }
+
+        .paths-intro p {
+          max-width: 28rem;
+          text-align: right;
+        }
+
+        .path-list {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+          gap: 1rem;
+        }
+
+        .path {
+          padding: 1.55rem 1.4rem 1.5rem;
+          min-height: 15.5rem;
+        }
+
+        .path:hover {
+          transform: translateY(-5px);
+          border-color: rgba(47, 125, 91, 0.32);
+          box-shadow: 0 18px 40px rgba(18, 58, 84, 0.1);
+        }
+
+        .contact {
+          margin-top: 2.4rem;
+          padding: 1.85rem 2rem;
+          grid-template-columns: 1fr auto;
+          align-items: center;
+          gap: 1.5rem;
+        }
+
+        .contact a {
+          font-size: 1.28rem;
+          padding: 0.85rem 1.15rem;
+          border-radius: 999px;
+          background: rgba(240, 215, 160, 0.12);
+          border: 1px solid rgba(240, 215, 160, 0.28);
+        }
+
+        .contact a:hover {
+          text-decoration: none;
+          background: rgba(240, 215, 160, 0.2);
+        }
+      }
+
+      @media (max-width: 959px) {
+        .paths-head {
+          display: grid;
+          gap: 0.2rem;
+        }
+      }
+
+      @media (max-width: 720px) {
+        .hero-veil {
+          background:
+            linear-gradient(180deg, rgba(255, 236, 204, 0.18), rgba(255, 244, 226, 0.78) 76%),
+            linear-gradient(90deg, rgba(255, 236, 204, 0.28), transparent 78%);
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation: none !important;
+          transition: none !important;
+        }
+        .bubble {
+          opacity: 0.35;
+        }
+        .pollen,
+        .birds,
+        .cloud,
+        .shire,
+        .leaf,
+        .edge-bird {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="bg" aria-hidden="true"></div>
+    <div class="grain" aria-hidden="true"></div>
+    <div class="shire" aria-hidden="true">
+      <span class="edge-cloud c1"></span>
+      <span class="edge-cloud c2"></span>
+      <span class="edge-cloud c3"></span>
+      <span class="edge-cloud c4"></span>
+      <span class="edge-cloud c5"></span>
+      <span class="edge-cloud c6"></span>
+      <span class="glow-bug b1"></span>
+      <span class="glow-bug b2"></span>
+      <span class="glow-bug b3"></span>
+      <span class="glow-bug b4"></span>
+      <span class="glow-bug b5"></span>
+      <span class="glow-bug b6"></span>
+      <span class="glow-bug b7"></span>
+      <span class="glow-bug b8"></span>
+      <span class="glow-bug b9"></span>
+      <span class="glow-bug b10"></span>
+      <span class="leaf l1"></span>
+      <span class="leaf l2"></span>
+      <span class="leaf l3"></span>
+      <span class="leaf l4"></span>
+      <span class="leaf l5"></span>
+      <span class="edge-bird e1">
+        <svg viewBox="0 0 96 40" aria-hidden="true">
+          <path class="wing" d="M38 20 C36 3 52 -2 74 10 C54 10 48 18 44 24 Z" />
+          <path class="body" d="M3 6 L28 20 L3 34 L14 20 Z" />
+          <ellipse class="body" cx="44" cy="22" rx="18" ry="6.4" transform="rotate(-7 44 22)" />
+          <circle class="body" cx="62" cy="18.6" r="5.4" />
+          <path class="body" d="M66.4 16.6 L84 18.2 L66.6 21.6 Z" />
+        </svg>
+      </span>
+      <span class="edge-bird e2">
+        <svg viewBox="0 0 96 40" aria-hidden="true">
+          <path class="wing" d="M38 20 C36 3 52 -2 74 10 C54 10 48 18 44 24 Z" />
+          <path class="body" d="M3 6 L28 20 L3 34 L14 20 Z" />
+          <ellipse class="body" cx="44" cy="22" rx="18" ry="6.4" transform="rotate(-7 44 22)" />
+          <circle class="body" cx="62" cy="18.6" r="5.4" />
+          <path class="body" d="M66.4 16.6 L84 18.2 L66.6 21.6 Z" />
+        </svg>
+      </span>
+      <div class="meadow-edge">
+        <svg viewBox="0 0 1440 180" preserveAspectRatio="none">
+          <path
+            class="grass-wave"
+            d="M0 78 C180 52 340 102 560 74 C820 40 1020 108 1240 68 C1340 50 1400 64 1440 58 L1440 180 L0 180 Z"
+            fill="#cfe0c4"
+            opacity="0.55"
+          />
+          <path
+            class="grass-wave b"
+            d="M0 108 C220 86 420 132 680 104 C940 74 1140 136 1440 100 L1440 180 L0 180 Z"
+            fill="#b7d0aa"
+            opacity="0.5"
+          />
+          <path
+            class="grass-wave c"
+            d="M0 138 C260 120 480 156 760 132 C1040 108 1220 158 1440 136 L1440 180 L0 180 Z"
+            fill="#9fbe90"
+            opacity="0.36"
+          />
+        </svg>
+      </div>
+    </div>
+
+    <div class="wrap">
+      <header>
+        <a class="brand" href="/">
+          <span class="mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path
+                d="M4 18 L12 6 L20 18"
+                stroke="#fff"
+                stroke-width="1.7"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M8.4 18 L12 12.2 L15.6 18"
+                stroke="#e0b35c"
+                stroke-width="1.5"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </span>
+          <span class="brand-name">Viamici</span>
+        </a>
+        <div class="lang" role="group" aria-label="Language">
+          <button type="button" data-lang="en" aria-pressed="true">EN</button>
+          <button type="button" data-lang="it" aria-pressed="false">IT</button>
+        </div>
+      </header>
+
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow" data-i18n="eyebrow">Coming soon</p>
+          <h1 class="brand-hero">Viamici</h1>
+          <p class="slogan" data-i18n="slogan">
+            Find your community and go on adventures!
+          </p>
+          <p class="lede" data-i18n="lede">
+            People nearby. Open air. Real days out. Host a trek, join a group, or take an AI guided path when you want a little wonder.
+          </p>
+          <div class="cta-row">
+            <div class="cta cta-primary" role="text">
+              <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+                <path fill="#34A853" d="M3 20.5V3.5L14 12 3 20.5Z" />
+                <path fill="#FBBC04" d="M14 12l5.6 4.1c.7-.5 1.4-1.5 1.4-2.7s-.7-2.2-1.4-2.7L14 12Z" />
+                <path fill="#4285F4" d="M3 20.5 14 12l7.6 5.6L3 20.5Z" />
+                <path fill="#EA4335" d="M3 3.5 21.6 6.4 14 12 3 3.5Z" />
+              </svg>
+              <span>
+                <strong data-i18n="play">Google Play</strong>
+                <small data-i18n="soonShort">Available soon</small>
+              </span>
+            </div>
+            <div class="cta cta-secondary" role="text">
+              <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  fill="currentColor"
+                  d="M16.4 12.7c0-2.3 1.9-3.4 2-3.5-1.1-1.6-2.8-1.8-3.4-1.8-1.4-.1-2.8.8-3.5.8s-1.8-.8-3-.8c-1.5 0-3 .9-3.8 2.3-1.6 2.8-.4 6.9 1.2 9.1.8 1.1 1.7 2.3 2.9 2.2 1.2 0 1.6-.7 3-.7s1.8.7 3 .7 2-.1 2.9-2.2c.7-1 1.2-2 1.5-3.1-3.9-1.5-3.8-6-2.8-7zM14.7 5.4c.6-.8 1.1-1.9.9-3-1 .05-2.2.7-2.9 1.5-.6.7-1.2 1.8-1 2.9 1.1.1 2.2-.5 3-1.4z"
+                />
+              </svg>
+              <span>
+                <strong data-i18n="appstore">App Store</strong>
+                <small data-i18n="soonShort">Available soon</small>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-art" aria-hidden="true">
+          <span class="art-chip">Milano · 45.46°N</span>
+          <svg viewBox="0 0 900 720" preserveAspectRatio="xMidYMax slice">
+            <defs>
+              <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#ffb36a" />
+                <stop offset="18%" stop-color="#ffd39a" />
+                <stop offset="42%" stop-color="#f3d7b0" />
+                <stop offset="72%" stop-color="#d8e5c8" />
+                <stop offset="100%" stop-color="#e8f0de" />
+              </linearGradient>
+              <linearGradient id="ridgeFar" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#c9a078" />
+                <stop offset="100%" stop-color="#7d8f68" />
+              </linearGradient>
+              <linearGradient id="ridgeMid" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#6aa57a" />
+                <stop offset="100%" stop-color="#3d6f55" />
+              </linearGradient>
+              <linearGradient id="ridgeNear" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#4d86a4" />
+                <stop offset="100%" stop-color="#1b4f72" />
+              </linearGradient>
+              <linearGradient id="sunGlow" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#fff7d8" />
+                <stop offset="100%" stop-color="#ffb247" stop-opacity="0.8" />
+              </linearGradient>
+              <linearGradient id="ray" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#ffe7b0" stop-opacity="0.55" />
+                <stop offset="100%" stop-color="#ffe7b0" stop-opacity="0" />
+              </linearGradient>
+              <linearGradient id="mist" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#fff6e8" stop-opacity="0" />
+                <stop offset="50%" stop-color="#fff6e8" stop-opacity="0.35" />
+                <stop offset="100%" stop-color="#fff6e8" stop-opacity="0" />
+              </linearGradient>
+              <radialGradient id="lakeShine" cx="50%" cy="40%" r="55%">
+                <stop offset="0%" stop-color="#d7ebf3" stop-opacity="0.75" />
+                <stop offset="100%" stop-color="#9fc4d6" stop-opacity="0" />
+              </radialGradient>
+              <filter id="soft">
+                <feGaussianBlur stdDeviation="14" />
+              </filter>
+            </defs>
+            <rect width="900" height="720" fill="url(#skyGrad)" />
+            <circle class="sun-halo" cx="690" cy="168" r="210" fill="#ffc878" opacity="0.28" filter="url(#soft)" />
+            <circle class="sun-core" cx="690" cy="168" r="78" fill="url(#sunGlow)" />
+            <circle class="sun-halo" cx="690" cy="168" r="148" fill="#ffe2a8" opacity="0.32" filter="url(#soft)" />
+            <g class="rays" opacity="0.42">
+              <path d="M690 168 L520 680" stroke="url(#ray)" stroke-width="72" />
+              <path d="M690 168 L690 700" stroke="url(#ray)" stroke-width="54" />
+              <path d="M690 168 L840 660" stroke="url(#ray)" stroke-width="40" />
+              <path d="M690 168 L430 620" stroke="url(#ray)" stroke-width="28" />
+            </g>
+            <g class="cloud">
+              <ellipse cx="180" cy="92" rx="54" ry="16" />
+              <ellipse cx="214" cy="86" rx="28" ry="13" />
+              <ellipse cx="150" cy="88" rx="22" ry="10" />
+            </g>
+            <g class="cloud slow">
+              <ellipse cx="430" cy="70" rx="46" ry="13" />
+              <ellipse cx="456" cy="66" rx="22" ry="10" />
+            </g>
+            <g class="birds">
+              <path class="bird" d="M12 18 q8 -7 16 0" />
+              <path class="bird" d="M36 10 q6 -5 12 0" />
+              <path class="bird" d="M28 28 q5 -4 10 0" />
+            </g>
+            <path
+              d="M0 330 C140 280 250 300 380 338 C530 384 640 278 780 318 C850 338 880 360 900 352 L900 720 L0 720 Z"
+              fill="url(#ridgeFar)"
+              opacity="0.62"
+            />
+            <path
+              d="M0 410 C160 350 280 380 430 418 C590 462 680 368 820 408 C870 426 890 448 900 438 L900 720 L0 720 Z"
+              fill="url(#ridgeMid)"
+              opacity="0.86"
+            />
+            <path
+              d="M0 500 C170 438 300 468 450 508 C620 552 710 458 840 498 C875 512 890 530 900 522 L900 720 L0 720 Z"
+              fill="url(#ridgeNear)"
+            />
+            <g fill="#123a54">
+              <path d="M628 478 L656 352 L684 478 Z" />
+              <path d="M652 486 L672 392 L694 486 Z" opacity="0.88" />
+              <path d="M688 496 L706 418 L724 496 Z" opacity="0.72" />
+              <path d="M598 490 L616 414 L634 490 Z" opacity="0.6" />
+              <path d="M744 508 L758 448 L774 508 Z" opacity="0.55" />
+            </g>
+            <ellipse class="lake-shine" cx="470" cy="612" rx="290" ry="36" fill="url(#lakeShine)" />
+            <ellipse class="mist-band" cx="470" cy="430" rx="380" ry="46" fill="url(#mist)" />
+            <ellipse class="mist-band late" cx="280" cy="500" rx="220" ry="32" fill="url(#mist)" />
+            <path
+              class="trail-line"
+              d="M210 590 C310 548 430 532 560 572"
+              fill="none"
+              stroke="#e0b35c"
+              stroke-width="2.2"
+              stroke-linecap="round"
+              opacity="0.78"
+            />
+            <circle cx="210" cy="590" r="3.4" fill="#e0b35c" />
+            <circle cx="370" cy="542" r="2.6" fill="#f3ead7" />
+            <circle cx="560" cy="572" r="3.4" fill="#e0b35c" />
+            <g fill="#123a54" opacity="0.9">
+              <circle cx="352" cy="538" r="3.2" />
+              <path d="M349 542 L347 556 L351 556 L350 548 L355 556 L358 556 L353 547 L355 542 Z" />
+              <circle cx="364" cy="536" r="2.7" />
+              <path d="M362 540 L360 552 L363 552 L363 546 L366 552 L369 552 L365 545 L366 540 Z" />
+            </g>
+          </svg>
+          <div class="hero-veil"></div>
+          <div class="shimmer"></div>
+          <div class="pollen" aria-hidden="true">
+            <i></i><i></i><i></i><i></i><i></i>
+          </div>
+        </div>
+      </section>
+
+      <section class="film" aria-labelledby="film-title">
+        <h2 id="film-title" class="visually-hidden" data-i18n="filmTitle">Coming soon</h2>
+        <div class="film-frame">
+          <video
+            controls
+            playsinline
+            preload="metadata"
+            poster="./coming-soon.jpg"
+            aria-label="Viamici, coming soon..."
+          >
+            <source src="./coming-soon.mp4" type="video/mp4" />
+          </video>
+        </div>
+      </section>
+
+      <div class="bubbles" id="bubbles" aria-hidden="true"></div>
+
+      <section class="paths">
+        <div class="paths-head">
+          <div class="paths-intro">
+            <h2 data-i18n="pathsTitle">Three ways in</h2>
+            <p data-i18n="pathsLede">
+              Pick the door that fits your day. Company first. Outdoors always.
+            </p>
+          </div>
+        </div>
+        <div class="path-list">
+          <article class="path">
+            <div class="path-top">
+              <span class="path-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+                  <path d="M12 21s-7-4.6-7-10.2A7 7 0 0 1 12 4a7 7 0 0 1 7 6.8C19 16.4 12 21 12 21Z" />
+                  <circle cx="12" cy="10.6" r="2.1" />
+                </svg>
+              </span>
+              <div class="path-index">01</div>
+            </div>
+            <h3 data-i18n="hostTitle">Host an adventure</h3>
+            <p data-i18n="hostBody">
+              Set the trail, invite companions, and open the day for people who want to come along.
+            </p>
+          </article>
+          <article class="path">
+            <div class="path-top">
+              <span class="path-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+                  <circle cx="8" cy="8" r="2.4" />
+                  <circle cx="16" cy="8.5" r="2.1" />
+                  <path d="M4.5 18c.6-2.6 2.4-4 4.6-4s4 1.4 4.6 4" />
+                  <path d="M13.2 14.2c.8-1.4 2.1-2.1 3.6-2.1 2 0 3.5 1.2 4.1 3.4" />
+                </svg>
+              </span>
+              <div class="path-index">02</div>
+            </div>
+            <h3 data-i18n="joinTitle">Join someone nearby</h3>
+            <p data-i18n="joinBody">
+              Find an outing close by and walk with people who share your pace.
+            </p>
+          </article>
+          <article class="path">
+            <div class="path-top">
+              <span class="path-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+                  <path d="M5 19c4-1 6.5-5.2 7-10" />
+                  <path d="M12 9.2c.4 2.6 2.2 4.8 5.4 5.8" />
+                  <circle cx="12.2" cy="7.2" r="2.1" />
+                  <circle cx="18.2" cy="16.2" r="1.3" />
+                </svg>
+              </span>
+              <div class="path-index">03</div>
+            </div>
+            <h3 data-i18n="aiTitle">Try an AI guided adventure</h3>
+            <p data-i18n="aiBody">
+              Soft suggestions for fresh routes when you want a little magic on the map.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="contact" id="contact">
+        <div>
+          <h2 data-i18n="contactTitle">Say hello</h2>
+          <p class="place" data-i18n="place">Milan, Italy</p>
+        </div>
+        <a href="mailto:info@viamici.com">info@viamici.com</a>
+      </section>
+
+      <footer data-i18n="footer">Viamici · outdoor community from Milan</footer>
+    </div>
+
+    <script>
+      (function () {
+        var copy = {
+          en: {
+            title: "Viamici · Find your community and go on adventures",
+            eyebrow: "Coming soon",
+            slogan: "Find your community and go on adventures!",
+            lede:
+              "People nearby. Open air. Real days out. Host a trek, join a group, or take an AI guided path when you want a little wonder.",
+            play: "Google Play",
+            appstore: "App Store",
+            soonShort: "Available soon",
+            pathsTitle: "Three ways in",
+            pathsLede: "Pick the door that fits your day. Company first. Outdoors always.",
+            hostTitle: "Host an adventure",
+            hostBody:
+              "Set the trail, invite companions, and open the day for people who want to come along.",
+            joinTitle: "Join someone nearby",
+            joinBody: "Find an outing close by and walk with people who share your pace.",
+            aiTitle: "Try an AI guided adventure",
+            aiBody:
+              "Soft suggestions for fresh routes when you want a little magic on the map.",
+            filmTitle: "Coming soon",
+            contactTitle: "Say hello",
+            place: "Milan, Italy",
+            footer: "Viamici · outdoor community from Milan",
+          },
+          it: {
+            title: "Viamici · Trova la tua community e parti all’avventura",
+            eyebrow: "Presto disponibile",
+            slogan: "Trova la tua community e parti all’avventura!",
+            lede:
+              "Persone vicine. Aria aperta. Giornate vere. Organizza un’uscita, unisciti a un gruppo, o prova un percorso guidato dall’AI quando vuoi un filo di magia.",
+            play: "Google Play",
+            appstore: "App Store",
+            soonShort: "Presto disponibile",
+            pathsTitle: "Tre porte di ingresso",
+            pathsLede: "Scegli quella che ti serve oggi. Prima le persone. Sempre all’aperto.",
+            hostTitle: "Organizza un’avventura",
+            hostBody:
+              "Traccia il percorso, invita compagni e apri la giornata a chi vuole unirsi.",
+            joinTitle: "Unisciti a qualcuno vicino",
+            joinBody: "Trova un’uscita qui intorno e cammina con chi ha il tuo ritmo.",
+            aiTitle: "Prova un’avventura guidata dall’AI",
+            aiBody:
+              "Suggerimenti leggeri per sentieri nuovi, quando vuoi un po’ di magia sulla mappa.",
+            filmTitle: "Presto disponibile",
+            contactTitle: "Scrivici",
+            place: "Milano, Italia",
+            footer: "Viamici · community outdoor da Milano",
+          },
+        };
+
+        var bubbles = {
+          en: [
+            "Relax",
+            "Adventure",
+            "Trekking",
+            "Hike",
+            "Camino",
+            "Walk",
+            "Cycling",
+            "Camping",
+            "Urban",
+            "Pilgrimage",
+          ],
+          it: [
+            "Relax",
+            "Avventura",
+            "Trekking",
+            "Escursione",
+            "Cammino",
+            "Passeggiata",
+            "Bici",
+            "Campeggio",
+            "Urbana",
+            "Pellegrinaggio",
+          ],
+        };
+
+        var html = document.documentElement;
+        var buttons = document.querySelectorAll(".lang button");
+        var bubbleRoot = document.getElementById("bubbles");
+        var stored = localStorage.getItem("viamici-lang");
+        var lang = stored === "it" || stored === "en" ? stored : "en";
+        var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+        function renderBubbles(next) {
+          if (!bubbleRoot) return;
+          bubbleRoot.innerHTML = "";
+          var words = bubbles[next] || bubbles.en;
+          words.forEach(function (word) {
+            var el = document.createElement("span");
+            el.className = "bubble";
+            el.textContent = word;
+            if (reduceMotion) {
+              el.style.animation = "none";
+              el.style.opacity = "0.55";
+            }
+            bubbleRoot.appendChild(el);
+          });
+        }
+
+        function apply(next) {
+          var t = copy[next];
+          if (!t) return;
+          html.classList.add("is-switching");
+          window.setTimeout(function () {
+            html.lang = next;
+            document.title = t.title;
+            document.querySelectorAll("[data-i18n]").forEach(function (el) {
+              var key = el.getAttribute("data-i18n");
+              if (t[key]) el.textContent = t[key];
+            });
+            buttons.forEach(function (btn) {
+              btn.setAttribute(
+                "aria-pressed",
+                btn.getAttribute("data-lang") === next ? "true" : "false"
+              );
+            });
+            localStorage.setItem("viamici-lang", next);
+            renderBubbles(next);
+            html.classList.remove("is-switching");
+          }, 120);
+        }
+
+        buttons.forEach(function (btn) {
+          btn.addEventListener("click", function () {
+            apply(btn.getAttribute("data-lang"));
+          });
+        });
+
+        apply(lang);
+      })();
+    </script>
+  </body>
+</html>
