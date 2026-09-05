@@ -36,7 +36,7 @@
     {
       id: "como-sunrise",
       title: "Como sunrise walk",
-      image: "https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?auto=format&fit=crop&w=900&q=80",
+      image: "https://images.unsplash.com/photo-1476514525535-07fd56833696?auto=format&fit=crop&w=900&q=80",
       pins: [{ x: 32, y: 38 }, { x: 62, y: 52 }, { x: 48, y: 28 }],
       organizerId: "giulia",
       people: ["giulia", "lea", "tomas", "aya"],
@@ -45,7 +45,7 @@
     {
       id: "sezione-brera",
       title: "Brera evening stroll",
-      image: "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?auto=format&fit=crop&w=900&q=80",
+      image: "https://images.unsplash.com/photo-1513581166391-887a96ddeafd?auto=format&fit=crop&w=900&q=80",
       pins: [{ x: 40, y: 44 }, { x: 58, y: 36 }],
       organizerId: "elena",
       people: ["elena", "marco", "noor"],
@@ -63,7 +63,7 @@
     {
       id: "navigli",
       title: "Navigli golden hour",
-      image: "https://images.unsplash.com/photo-1515542622106-78bda8ba0e5b?auto=format&fit=crop&w=900&q=80",
+      image: "https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?auto=format&fit=crop&w=900&q=80",
       pins: [{ x: 36, y: 48 }, { x: 60, y: 40 }],
       organizerId: "lea",
       people: ["lea", "giulia", "elena"],
@@ -243,34 +243,32 @@
   }
 
   /**
-   * IntersectionObserver picks the card closest to center after a swipe.
-   * CSS scroll-snap handles the motion; this only syncs focused state.
+   * After a swipe, measure which card sits nearest the carousel center.
+   * CSS scroll-snap does the motion; this only syncs focused state.
    */
+  function nearestCardId() {
+    const cards = [...els.carousel.querySelectorAll(".event-card")];
+    if (!cards.length) return null;
+    const mid = els.carousel.scrollLeft + els.carousel.clientWidth / 2;
+    return cards.reduce((best, card) => {
+      const center = card.offsetLeft + card.clientWidth / 2;
+      const dist = Math.abs(center - mid);
+      return dist < best.dist ? { id: card.dataset.id, dist } : best;
+    }, { id: cards[0].dataset.id, dist: Infinity }).id;
+  }
+
   function bindCarousel() {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const best = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-        if (!best) return;
-        const id = best.target.dataset.id;
-        if (id && id !== state.focusedId) {
-          state.focusedId = id;
-          highlightCards();
-          renderGroup(true);
-        }
-      },
-      { root: els.carousel, threshold: [0.55, 0.7, 0.85] }
-    );
-
-    const watch = () => {
-      observer.disconnect();
-      els.carousel.querySelectorAll(".event-card").forEach((card) => observer.observe(card));
-    };
-
-    const mo = new MutationObserver(watch);
-    mo.observe(els.carousel, { childList: true });
-    watch();
+    let settle;
+    els.carousel.addEventListener("scroll", () => {
+      clearTimeout(settle);
+      settle = setTimeout(() => {
+        const id = nearestCardId();
+        if (!id || id === state.focusedId) return;
+        state.focusedId = id;
+        highlightCards();
+        renderGroup(true);
+      }, 70);
+    }, { passive: true });
 
     els.dots.addEventListener("click", (event) => {
       const id = event.target.closest("[data-go]")?.dataset.go;

@@ -362,11 +362,15 @@ button {
   pointer-events: none;
 }
 
-.pin {
+.pins > span {
   position: absolute;
+  transform: translate(-50%, -100%);
+}
+
+.pin {
+  display: block;
   width: 1.35rem;
   height: 1.35rem;
-  transform: translate(-50%, -100%);
   filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.28));
 }
 
