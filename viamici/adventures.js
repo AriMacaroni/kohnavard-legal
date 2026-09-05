@@ -286,11 +286,16 @@
       if (Math.abs(dx) > 6) dragged = true;
       els.carousel.scrollLeft = drag.left - dx;
     });
-    const endDrag = () => {
+    const endDrag = (event) => {
       if (!drag) return;
+      const dx = Math.abs(event.clientX - drag.x);
+      const tapped = event.target.closest?.(".event-card");
       drag = null;
       els.carousel.classList.remove("is-dragging");
-      const id = nearestCardId();
+      const id =
+        dx < 8 && tapped && tapped.dataset.id !== state.focusedId
+          ? tapped.dataset.id
+          : nearestCardId();
       if (id) {
         state.focusedId = id;
         highlightCards();
