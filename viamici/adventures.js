@@ -270,6 +270,50 @@
       }, 70);
     }, { passive: true });
 
+    // Desktop / automation: drag the track instead of dragging the photo.
+    let drag = null;
+    let dragged = false;
+    els.carousel.addEventListener("pointerdown", (event) => {
+      if (event.pointerType === "touch") return;
+      drag = { x: event.clientX, left: els.carousel.scrollLeft };
+      dragged = false;
+      els.carousel.classList.add("is-dragging");
+      els.carousel.setPointerCapture(event.pointerId);
+    });
+    els.carousel.addEventListener("pointermove", (event) => {
+      if (!drag) return;
+      const dx = event.clientX - drag.x;
+      if (Math.abs(dx) > 6) dragged = true;
+      els.carousel.scrollLeft = drag.left - dx;
+    });
+    const endDrag = () => {
+      if (!drag) return;
+      drag = null;
+      els.carousel.classList.remove("is-dragging");
+      const id = nearestCardId();
+      if (id) {
+        state.focusedId = id;
+        highlightCards();
+        snapTo(id, true);
+        renderGroup(true);
+      }
+    };
+    els.carousel.addEventListener("pointerup", endDrag);
+    els.carousel.addEventListener("pointercancel", endDrag);
+
+    els.carousel.addEventListener("click", (event) => {
+      if (dragged) {
+        dragged = false;
+        return;
+      }
+      const card = event.target.closest(".event-card");
+      if (!card || card.dataset.id === state.focusedId) return;
+      state.focusedId = card.dataset.id;
+      highlightCards();
+      snapTo(card.dataset.id, true);
+      renderGroup(true);
+    });
+
     els.dots.addEventListener("click", (event) => {
       const id = event.target.closest("[data-go]")?.dataset.go;
       if (!id) return;
@@ -357,8 +401,7 @@
   }
 
   function bindGroup() {
-    els.avatars.addEventListener("click", onPerson);
-    els.organizer.addEventListener("click", (event) => {
+    document.querySelector(".app").addEventListener("click", (event) => {
       const joinId = event.target.closest("[data-join]")?.dataset.join;
       if (joinId) {
         if (state.joined.has(joinId)) state.joined.delete(joinId);
@@ -367,7 +410,7 @@
         toast(state.joined.has(joinId) ? "You’re in. See you on the trail." : "Left this adventure.");
         return;
       }
-      onPerson(event);
+      if (event.target.closest("[data-person]")) onPerson(event);
     });
   }
 
